@@ -6,23 +6,32 @@ import { FaLock, FaUser } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import Country from "../country/countries.json";
 
 interface registered {
-  name: string;
+  fullname: string;
   email: string;
+  country: string;
+  phone: string;
   password: string;
   comfirmPassword: string;
 }
 
 function Signup() {
   const schema = yup.object().shape({
-    name: yup.string().required("your full name is required"),
+    fullname: yup.string().required("your full name is required"),
     email: yup.string().email("Not an email").required("Email ir required"),
+    country: yup.string().required("country is required"),
+    phone: yup
+      .string()
+      .required("phone number is require")
+      .min(11, "invalid number"),
+
     password: yup
       .string()
       .required("password is required")
-      .min(6, "less than 6 characters")
-      .max(12, "more that 12 character"),
+      .min(8, "less than 8 characters")
+      .max(20, "more that 20 character"),
     comfirmPassword: yup
       .string()
       .oneOf([yup.ref("password")], "password does not match")
@@ -35,20 +44,33 @@ function Signup() {
   } = useForm<registered>({
     resolver: yupResolver(schema),
   });
+  const countries = Object.keys(Country)?.map((country) => (
+    <option key={country} value={country}>
+      {country}
+    </option>
+  ));
   const navigate = useNavigate();
 
-
   const onSubmit = async (data: registered) => {
-    //https://api-coders.ipglobalreits.com/api/
+    const signupData = {
+      fullname: data.fullname,
+      email: data.email,
+      country: data.country,
+      phone: data.phone,
+      password: data.password,
+    };
     try {
-      const res = await axios("");
-      console.log(data);
+      const res = await axios.post(
+        "https://api-coders.ipglobalreits.com/api/auth/sign-up",
+        signupData,
+      );
+      console.log(res.data);
       navigate("/Login");
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-
-  
   return (
     <>
       <main className="w-full h-screen bg-cyan-50 flex items-center justify-center ">
@@ -66,13 +88,15 @@ function Signup() {
 
                 <input
                   type="text"
-                  {...register("name")}
+                  {...register("fullname")}
                   id="name"
                   placeholder="Full Name"
                   autoComplete="name"
                   className=" pl-6 py-0.5 w-70 border border-gray-300 rounded"
                 />
-                <p className="text-red-600 text-xs">{errors.name?.message}</p>
+                <p className="text-red-600 text-xs">
+                  {errors.fullname?.message}
+                </p>
               </div>
               <div className="flex flex-col relative">
                 {/* <label htmlFor="email">Email address</label> */}
@@ -88,6 +112,39 @@ function Signup() {
                 />
                 <p className="text-red-600 text-xs">{errors.email?.message}</p>
               </div>
+
+              {/*  */}
+              <div className="flex flex-col relative">
+                <select
+                  className="w-full border border-gray-300 rounded py-0.5"
+                  {...register("country")}
+                >
+                  <option value="" defaultChecked>
+                    {" "}
+                    ----select country---
+                  </option>
+                  {countries}
+                </select>
+              </div>
+
+              {/*start  */}
+              <div className="flex flex-col relative">
+                {/* <label htmlFor="email">Email address</label> */}
+                {/* <MdEmail className="absolute left-1 top-1.5 " /> */}
+
+                <input
+                  type="tel"
+                  id=""
+                  {...register("phone")}
+                  placeholder="Enter phone number"
+                  autoComplete="phone"
+                  className=" pl-6 py-0.5 w-70 border border-gray-300 rounded"
+                />
+
+                <p className="text-red-600 text-xs">{errors.phone?.message}</p>
+              </div>
+
+              {/* end */}
               <div className="flex flex-col relative">
                 {/* <label htmlFor="password">passsword</label> */}
                 <FaLock className="absolute left-1 top-1.5 " />
