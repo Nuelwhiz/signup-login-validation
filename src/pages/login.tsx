@@ -4,8 +4,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { FaLock, FaUser } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 interface Signing {
   email: string;
@@ -13,13 +14,14 @@ interface Signing {
 }
 
 function Login() {
+  // const [erroMsg, setErroMsg] = useState<string>("");
   const logischema = yup.object().shape({
     email: yup.string().email("Not an email").required("Email ir required"),
     password: yup
       .string()
       .required("password is required")
-      .min(6, "less than 6 characters")
-      .max(12, "more that 12 character"),
+      .min(8, "less than 8 characters")
+      .max(20, "more that 20 character"),
   });
   const {
     register,
@@ -29,13 +31,27 @@ function Login() {
     resolver: yupResolver(logischema),
   });
   const navigation = useNavigate();
-  
 
   const login = async (data: Signing) => {
+    const loginDetail = {
+      email: data.email,
+      password: data.password,
+    };
     try {
-      console.log(data);
-      navigation("/Home");
-    } catch (error) {}
+      const res = await axios.post(
+        "https://api-coders.ipglobalreits.com/api/auth/sign-in",
+        loginDetail,
+      );
+      console.log("login successfull", loginDetail);
+
+      if (res.data.token) {
+        localStorage.setItem("token", res.data.token);
+      }
+      //navigation("/Home");
+    } catch (error) {
+      //const msg = error.res?.data?.message || "invalid email or password";
+      //setErroMsg(msg);
+    }
   };
   return (
     <>

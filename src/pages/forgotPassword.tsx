@@ -5,20 +5,19 @@ import * as yup from "yup";
 import { FaLock, FaUser } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import axios from "axios";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 interface forgotMail {
   email: string;
-  //code: string;
 }
 
 function ForgotPassword() {
+  const [successMsg, setSuccessMsg] = useState<string>("");
+  const [timer, setTimer] = useState<number>(60);
+  const [resendMsg, setResendMsg] = useState<boolean>(false);
+
   const schema = yup.object().shape({
     email: yup.string().email("Not an email").required("Email ir required"),
-    /* code: yup
-      .string()
-      .required("code is required")
-      .min(4, "must be four digit"), */
   });
   const {
     register,
@@ -28,14 +27,37 @@ function ForgotPassword() {
     resolver: yupResolver(schema),
   });
 
+  useEffect(() => {
+    let interval: number;
+    if (successMsg && timer > 0) {
+      interval = setInterval(() => {
+        setTimer((prev) => prev - 1);
+      }, 1000);
+    }
+    if (timer === 0) {
+      setResendMsg(true);
+    }
+    return () => clearInterval(interval);
+  }, [timer, successMsg]);
   //
+
   //const [codeDisplay, setCodeDisplay] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const forgotPassCode = async (data: forgotMail) => {
+    const resetDetail = {
+      email: data.email,
+    };
     try {
-      console.log(data);
-      navigate("/ResetPassword");
+      const res = await axios.post(
+        "https://api-coders.ipglobalreits.com/api/auth/",
+        resetDetail,
+      );
+      console.log(res.data);
+      setSuccessMsg("verification code has been sent to your email");
+      setTimer(60);
+      setResendMsg(false);
+      // navigate("/ResetPassword");
     } catch (error) {}
   };
 
@@ -73,9 +95,19 @@ function ForgotPassword() {
                 <p className="text-red-600 text-xs">{errors.email?.message}</p>
               </div>
 
-              <button className="bg-green-900 hover:bg-green-700 w-full py-1 rounded cursor-pointer my-3 text-white">
-                Send reset link
+              <button
+                disabled={!resendMsg && successMsg !== ""}
+                className={` hover:bg-green-700 w-full py-1 rounded cursor-pointer my-3 text-white ${!resendMsg && successMsg !== "" ? "bg-gray-400" : "bg-green-900"}`}
+              >
+                {
+                  successMsg ? resendMsg ? "Resend code":`Resend in ${timer}s`:"Send code"
+                }
               </button>
+              {
+                successMsg && (
+                  <p> {successMsg}</p>
+                )
+              }
 
               <div className="flex items-center justify-between ">
                 <div className="flex-1 w-50 border border-gray-200 rounded "></div>
