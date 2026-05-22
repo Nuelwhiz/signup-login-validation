@@ -5,7 +5,8 @@ import * as yup from "yup";
 import { FaKey, FaLock, FaUser } from "react-icons/fa";
 import axios from "axios";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import type { schema } from "@hookform/resolvers/ajv/src/__tests__/__fixtures__/data.js";
 interface resetPassword {
   password: string;
   comfirmPassword: string;
@@ -23,6 +24,13 @@ function ResetPassword() {
       .oneOf([yup.ref("password")], "password does not match")
       .required("comfirm password"),
   });
+
+  //type FormData = yup.InferType<typeof schema>;
+  const navigation = useNavigate();
+  const { token } = useParams();
+  const [msg, setMsg] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+
   const {
     register,
     handleSubmit,
@@ -30,13 +38,28 @@ function ResetPassword() {
   } = useForm<resetPassword>({
     resolver: yupResolver(logischema),
   });
-  const navigation = useNavigate();
 
   const reset = async (data: resetPassword) => {
+    setLoading(true);
+    setMsg("");
+    const resetPassword = {
+      password: data.password,
+      token: token,
+    };
     try {
-      console.log(data);
-      navigation("/Login");
-    } catch (error) {}
+      const res = await axios.post(
+        "https://api-coders.ipglobalreits.com/api/auth/reset-password",
+        resetPassword,
+      );
+      setMsg("password reset succesully. redirecting...");
+      setTimeout(() => {
+        navigation("/Login");
+      }, 2000);
+    } catch (error: any) {
+      setMsg(error.response?.data?.message || "something wend wrong");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -68,7 +91,7 @@ function ResetPassword() {
                   {...register("password")}
                   placeholder="Enter new password"
                   autoComplete="new-password"
-                  className=" w-70 border border-gray-300 rounded pl-6 py-0.5"
+                  className=" w-70 border border-gray-300 rounded-2xl pl-6 py-0.5"
                 />
                 <p className="text-red-600 text-xs">
                   {errors.password?.message}
@@ -84,7 +107,7 @@ function ResetPassword() {
                   {...register("comfirmPassword")}
                   placeholder="comfirm new password"
                   autoComplete="new-password"
-                  className=" w-70 border border-gray-300 rounded pl-6 py-0.5"
+                  className=" w-70 border border-gray-300 rounded-2xl pl-6 py-0.5"
                 />
 
                 <p className="text-red-600 text-xs">
@@ -92,9 +115,11 @@ function ResetPassword() {
                 </p>
               </div>
               <button className="bg-green-900 hover:bg-green-700 w-full py-1 rounded cursor-pointer my-2 text-white">
-                Reset password
+                {loading ? "loading..." : "Reset password"}
               </button>
+              {msg && <p className="text-green-600 text-xs">{msg}</p>}
 
+              {token && <p className="text-red-600 text-xs">invalid code</p>}
               <div className="flex items-center justify-between ">
                 <div className="flex-1 w-50 border border-gray-200 rounded "></div>
                 <span className="px-3">OR</span>

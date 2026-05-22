@@ -7,6 +7,7 @@ import { MdEmail } from "react-icons/md";
 import axios, { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 
 interface Signing {
   email: string;
@@ -14,6 +15,8 @@ interface Signing {
 }
 
 function Login() {
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+
   // const [erroMsg, setErroMsg] = useState<string>("");
   const logischema = yup.object().shape({
     email: yup.string().email("Not an email").required("Email ir required"),
@@ -73,7 +76,7 @@ function Login() {
                   {...register("email")}
                   placeholder="Enter email"
                   autoComplete="email"
-                  className=" pl-6 py-0.5 w-70 border border-gray-300 rounded"
+                  className=" pl-6 py-0.5 w-70 border border-gray-300 rounded-2xl"
                 />
                 <p className="text-red-600 text-xs">{errors.email?.message}</p>
               </div>
@@ -82,13 +85,19 @@ function Login() {
                 <FaLock className="absolute left-1 top-1.5 " />
 
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   id="password"
                   {...register("password")}
                   placeholder="Enter password"
                   autoComplete="new-password"
-                  className=" w-70 border border-gray-300 rounded pl-6 py-0.5"
+                  className=" w-70 border border-gray-300 rounded-2xl pl-6 py-0.5"
                 />
+                <span
+                  className="absolute top-1.5 right-1 cursor-pointer"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                >
+                  {showPassword ? <Eye size={17} /> : <EyeOff size={17} />}
+                </span>
                 <p className="text-red-600 text-xs">
                   {errors.password?.message}
                 </p>

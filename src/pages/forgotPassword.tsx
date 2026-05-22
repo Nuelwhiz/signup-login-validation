@@ -17,7 +17,7 @@ function ForgotPassword() {
   const [resendMsg, setResendMsg] = useState<boolean>(false);
 
   const schema = yup.object().shape({
-    email: yup.string().email("Not an email").required("Email ir required"),
+    email: yup.string().email("Not an email").required("Email is required"),
   });
   const {
     register,
@@ -50,7 +50,7 @@ function ForgotPassword() {
     };
     try {
       const res = await axios.post(
-        "https://api-coders.ipglobalreits.com/api/auth/",
+        "https://api-coders.ipglobalreits.com/api/auth/forgot-password",
         resetDetail,
       );
       console.log(res.data);
@@ -90,7 +90,7 @@ function ForgotPassword() {
                   {...register("email")}
                   placeholder="Enter email"
                   autoComplete="email"
-                  className=" pl-6 py-0.5 w-70 border border-gray-300 rounded"
+                  className=" pl-6 py-0.5 w-70 border border-gray-300 rounded-2xl"
                 />
                 <p className="text-red-600 text-xs">{errors.email?.message}</p>
               </div>
@@ -99,15 +99,13 @@ function ForgotPassword() {
                 disabled={!resendMsg && successMsg !== ""}
                 className={` hover:bg-green-700 w-full py-1 rounded cursor-pointer my-3 text-white ${!resendMsg && successMsg !== "" ? "bg-gray-400" : "bg-green-900"}`}
               >
-                {
-                  successMsg ? resendMsg ? "Resend code":`Resend in ${timer}s`:"Send code"
-                }
+                {successMsg
+                  ? resendMsg
+                    ? "Resend code"
+                    : `Resend in ${timer}s`
+                  : "Send code"}
               </button>
-              {
-                successMsg && (
-                  <p> {successMsg}</p>
-                )
-              }
+              {successMsg && <p className="text-green-600"> {successMsg}</p>}
 
               <div className="flex items-center justify-between ">
                 <div className="flex-1 w-50 border border-gray-200 rounded "></div>

@@ -7,6 +7,8 @@ import { MdEmail } from "react-icons/md";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Country from "../country/countries.json";
+import { Eye, EyeOff } from "lucide-react";
+import { useState } from "react";
 
 interface registered {
   fullname: string;
@@ -18,6 +20,10 @@ interface registered {
 }
 
 function Signup() {
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [comfirmShowPassword, setComfirmShowPassword] =
+    useState<boolean>(false);
+
   const schema = yup.object().shape({
     fullname: yup.string().required("your full name is required"),
     email: yup.string().email("Not an email").required("Email ir required"),
@@ -65,9 +71,9 @@ function Signup() {
         signupData,
       );
       console.log(res.data);
-      navigate("/Login");
+      //navigate("/Login");
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   };
 
@@ -92,7 +98,7 @@ function Signup() {
                   id="name"
                   placeholder="Full Name"
                   autoComplete="name"
-                  className=" pl-6 py-0.5 w-70 border border-gray-300 rounded"
+                  className=" pl-6 py-0.5 w-70 border border-gray-300 rounded-2xl"
                 />
                 <p className="text-red-600 text-xs">
                   {errors.fullname?.message}
@@ -108,7 +114,7 @@ function Signup() {
                   {...register("email")}
                   placeholder="Enter email"
                   autoComplete="email"
-                  className=" pl-6 py-0.5 w-70 border border-gray-300 rounded"
+                  className=" pl-6 py-0.5 w-70 border border-gray-300 rounded-2xl"
                 />
                 <p className="text-red-600 text-xs">{errors.email?.message}</p>
               </div>
@@ -116,7 +122,7 @@ function Signup() {
               {/*  */}
               <div className="flex flex-col relative">
                 <select
-                  className="w-full border border-gray-300 rounded py-0.5"
+                  className="w-full border border-gray-300 rounded-2xl py-0.5"
                   {...register("country")}
                 >
                   <option value="" defaultChecked>
@@ -138,7 +144,7 @@ function Signup() {
                   {...register("phone")}
                   placeholder="Enter phone number"
                   autoComplete="phone"
-                  className=" pl-6 py-0.5 w-70 border border-gray-300 rounded"
+                  className=" pl-6 py-0.5 w-70 border border-gray-300 rounded-2xl"
                 />
 
                 <p className="text-red-600 text-xs">{errors.phone?.message}</p>
@@ -150,13 +156,20 @@ function Signup() {
                 <FaLock className="absolute left-1 top-1.5 " />
 
                 <input
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   id="password"
                   {...register("password")}
                   placeholder="Enter password"
                   autoComplete="new-password"
-                  className=" w-70 border border-gray-300 rounded pl-6 py-0.5"
+                  className=" w-70 border border-gray-300 rounded-2xl pl-6 py-0.5"
                 />
+                <span
+                  className="absolute top-1.5 right-1 cursor-pointer"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                >
+                  {showPassword ? <Eye size={17} /> : <EyeOff size={17} />}
+                </span>
+
                 <p className="text-red-600 text-xs">
                   {errors.password?.message}
                 </p>
@@ -166,13 +179,24 @@ function Signup() {
                 <FaLock className="absolute left-1 top-1.5 " />
 
                 <input
-                  type="password"
+                  type={comfirmShowPassword ? "text" : "password"}
                   id="comfirm-password"
                   {...register("comfirmPassword")}
                   placeholder="comfirm password"
                   autoComplete="new-password"
-                  className=" w-70 border border-gray-300 rounded pl-6 py-0.5"
+                  className=" w-70 border border-gray-300 rounded-2xl pl-6 py-0.5"
                 />
+
+                <span
+                  className="absolute top-1.5 right-1 cursor-pointer"
+                  onClick={() => setComfirmShowPassword((prev) => !prev)}
+                >
+                  {comfirmShowPassword ? (
+                    <Eye size={17} />
+                  ) : (
+                    <EyeOff size={17} />
+                  )}
+                </span>
                 <p className="text-red-600 text-xs">
                   {errors.comfirmPassword?.message}
                 </p>
@@ -182,7 +206,7 @@ function Signup() {
                   <input
                     type="checkbox"
                     id="agree"
-                    className=" border border-gray-300 rounded"
+                    className=" border border-gray-300 rounded-2xl"
                   />
                   <label
                     htmlFor="agree"
