@@ -7,6 +7,8 @@ import { MdEmail } from "react-icons/md";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { LockIcon, MailIcon } from "lucide-react";
+
 interface forgotMail {
   email: string;
 }
@@ -58,7 +60,9 @@ function ForgotPassword() {
       setTimer(60);
       setResendMsg(false);
       // navigate("/ResetPassword");
-    } catch (error) {}
+    } catch (error: any) {
+      console.log(error.response.data);
+    }
   };
 
   return (
@@ -69,7 +73,7 @@ function ForgotPassword() {
             <div className="flex flex-col gap-3 text-gray-600 items-center">
               <div className="flex flex-col gap-1 justify-center items-center gap-2">
                 <span className="bg-green-100 p-6 rounded-full">
-                  <FaLock className=" text-3xl " />
+                  <LockIcon size={30} />
                 </span>
 
                 <h1 className="text-2xl text-center  text-gray-800 ">
@@ -82,7 +86,7 @@ function ForgotPassword() {
               </div>
               <div className="flex flex-col relative">
                 {/* <label htmlFor="email">Email address</label> */}
-                <MdEmail className="absolute left-1 top-1.5 " />
+                <MailIcon size={17} className="absolute left-1 top-1.5 " />
 
                 <input
                   type="email"

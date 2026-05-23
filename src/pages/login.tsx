@@ -7,7 +7,7 @@ import { MdEmail } from "react-icons/md";
 import axios, { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, LockIcon, MailIcon } from "lucide-react";
 
 interface Signing {
   email: string;
@@ -46,6 +46,7 @@ function Login() {
         loginDetail,
       );
       console.log("login successfull", loginDetail);
+      navigation("/Home");
 
       if (res.data.token) {
         localStorage.setItem("token", res.data.token);
@@ -68,7 +69,7 @@ function Login() {
               </div>
               <div className="flex flex-col relative">
                 {/* <label htmlFor="email">Email address</label> */}
-                <MdEmail className="absolute left-1 top-1.5 " />
+                <MailIcon size={17} className="absolute left-1 top-1.5 " />
 
                 <input
                   type="email"
@@ -82,7 +83,7 @@ function Login() {
               </div>
               <div className="flex flex-col relative">
                 {/* <label htmlFor="password">passsword</label> */}
-                <FaLock className="absolute left-1 top-1.5 " />
+                <LockIcon size={17} className="absolute left-1 top-1.5  " />
 
                 <input
                   type={showPassword ? "text" : "password"}

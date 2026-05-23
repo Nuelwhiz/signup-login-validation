@@ -7,7 +7,14 @@ import { MdEmail } from "react-icons/md";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Country from "../country/countries.json";
-import { Eye, EyeOff } from "lucide-react";
+import {
+  Eye,
+  EyeOff,
+  LockIcon,
+  PhoneIcon,
+  MailIcon,
+  UserIcon,
+} from "lucide-react";
 import { useState } from "react";
 
 interface registered {
@@ -90,7 +97,7 @@ function Signup() {
 
               <div className="flex flex-col relative">
                 {/*   <label htmlFor="name">Name</label> */}
-                <FaUser className="absolute left-1 top-1.5 " />
+                <UserIcon size={17} className="absolute left-1 top-1.5 " />
 
                 <input
                   type="text"
@@ -106,7 +113,7 @@ function Signup() {
               </div>
               <div className="flex flex-col relative">
                 {/* <label htmlFor="email">Email address</label> */}
-                <MdEmail className="absolute left-1 top-1.5 " />
+                <MailIcon size={17} className="absolute left-1 top-1.5 " />
 
                 <input
                   type="email"
@@ -122,12 +129,12 @@ function Signup() {
               {/*  */}
               <div className="flex flex-col relative">
                 <select
-                  className="w-full border border-gray-300 rounded-2xl py-0.5"
+                  className="w-full border border-gray-300 rounded-2xl py-0.5 "
                   {...register("country")}
                 >
                   <option value="" defaultChecked>
                     {" "}
-                    ----select country---
+                    Choose country
                   </option>
                   {countries}
                 </select>
@@ -137,6 +144,7 @@ function Signup() {
               <div className="flex flex-col relative">
                 {/* <label htmlFor="email">Email address</label> */}
                 {/* <MdEmail className="absolute left-1 top-1.5 " /> */}
+                <PhoneIcon size={17} className="absolute left-1 top-1.5 " />
 
                 <input
                   type="tel"
@@ -153,7 +161,7 @@ function Signup() {
               {/* end */}
               <div className="flex flex-col relative">
                 {/* <label htmlFor="password">passsword</label> */}
-                <FaLock className="absolute left-1 top-1.5 " />
+                <LockIcon size={17} className="absolute left-1 top-1.5 " />
 
                 <input
                   type={showPassword ? "text" : "password"}
@@ -176,7 +184,7 @@ function Signup() {
               </div>
               <div className="flex flex-col relative">
                 {/*  <label htmlFor="comfirm-password">Comfirm passsword</label> */}
-                <FaLock className="absolute left-1 top-1.5 " />
+                <LockIcon size={17} className="absolute left-1 top-1.5 " />
 
                 <input
                   type={comfirmShowPassword ? "text" : "password"}
