@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 function Landing() {
   return (
     <>
+      <ToastContainer />
       <main className="h-screen w-full bg-cyan-50 relative ">
         <header className="w-full p-4 flex justify-end">
           <Link
@@ -11,6 +13,16 @@ function Landing() {
           >
             login/signup
           </Link>
+
+          <button
+            onClick={() =>
+              toast.success("clicked successfully", {
+                position: "top-center",
+              })
+            }
+          >
+            handle
+          </button>
         </header>
       </main>
     </>

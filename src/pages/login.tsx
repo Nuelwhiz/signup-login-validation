@@ -2,12 +2,11 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { FaLock, FaUser } from "react-icons/fa";
-import { MdEmail } from "react-icons/md";
 import axios, { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Eye, EyeOff, LockIcon, MailIcon } from "lucide-react";
+import { ToastContainer, toast } from "react-toastify";
 
 interface Signing {
   email: string;
@@ -46,6 +45,7 @@ function Login() {
         loginDetail,
       );
       console.log("login successfull", loginDetail);
+
       navigation("/Home");
 
       if (res.data.token) {
@@ -53,6 +53,9 @@ function Login() {
       }
       //navigation("/Home");
     } catch (error) {
+      toast.error("invalid email or password", {
+        position: "top-center",
+      });
       //const msg = error.res?.data?.message || "invalid email or password";
       //setErroMsg(msg);
     }
@@ -60,6 +63,7 @@ function Login() {
   return (
     <>
       <main className="w-full h-screen bg-cyan-50 flex items-center justify-center ">
+        <ToastContainer />
         <div className="  rounded-2xl  bg-cyan-50 shadow-xl px-6  py-12 ">
           <form onSubmit={handleSubmit(login)}>
             <div className="flex flex-col gap-3 text-gray-600">
