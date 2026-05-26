@@ -2,8 +2,6 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { FaLock, FaUser } from "react-icons/fa";
-import { MdEmail } from "react-icons/md";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Country from "../country/countries.json";
@@ -16,6 +14,7 @@ import {
   UserIcon,
 } from "lucide-react";
 import { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
 
 interface registered {
   fullname: string;
@@ -77,16 +76,22 @@ function Signup() {
         "https://api-coders.ipglobalreits.com/api/auth/sign-up",
         signupData,
       );
+      toast.success("signup successfully", {
+        position: "top-center",
+      });
       console.log(res.data);
-      //navigate("/Login");
+      navigate("/Login");
     } catch (error) {
-      //console.log(error);
+      toast.error("email already exist", {
+        position: "top-center",
+      });
     }
   };
 
   return (
     <>
       <main className="w-full h-screen bg-cyan-50 flex items-center justify-center ">
+        <ToastContainer />
         <div className="  rounded-2xl  bg-cyan-50 shadow-xl px-6  py-12 ">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-3 text-gray-600">

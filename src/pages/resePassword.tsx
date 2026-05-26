@@ -2,14 +2,15 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { FaKey, FaLock, FaUser } from "react-icons/fa";
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { LockIcon, KeyIcon, Eye, EyeOff } from "lucide-react";
+import { toast } from "react-toastify";
+//import { ToastContainer, toast } from "react-toastify";
 
 interface resetPassword {
-  email: string;
+  // email: string;
   password: string;
   comfirmPassword: string;
 }
@@ -19,7 +20,7 @@ function ResetPassword() {
   const [comfirmShowPassword, setComfirmShowPassword] =
     useState<boolean>(false);
   const logischema = yup.object().shape({
-    email: yup.string().required(),
+    // email: yup.string().required(),
     password: yup
       .string()
       .required("password is required")
@@ -57,14 +58,19 @@ function ResetPassword() {
         "https://api-coders.ipglobalreits.com/api/auth/reset-password",
         resetPassword,
       );
-      setMsg("password reset succesully. redirecting...");
+      toast.success("password reset succesully. redirecting...");
+
+      console.log(resetPassword);
+
       setTimeout(() => {
         navigation("/Login");
       }, 2000);
 
-      navigation("/Home");
+      //navigation("/Home");
     } catch (error: any) {
-      setMsg(error.response?.data?.message || "something wend wrong");
+      toast.error("something went wrong");
+
+      //toast.success("something went wrong!");
     } finally {
       setLoading(false);
     }
@@ -92,13 +98,13 @@ function ResetPassword() {
 
               {/*  */}
               <div>
-                <input
+                {/* <input
                   type="email"
                   id="email"
-                  placeholder="Enter email"
+                  {...register("email")}
                   autoComplete="email"
                   className=" pl-6 py-0.5 w-70 border border-gray-300 rounded-2xl hidden"
-                />
+                /> */}
               </div>
               {/*  */}
               <div className="flex flex-col relative">

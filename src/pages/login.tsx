@@ -44,18 +44,25 @@ function Login() {
         "https://api-coders.ipglobalreits.com/api/auth/sign-in",
         loginDetail,
       );
+      toast.success("logged in successful", {
+        position: "top-center",
+      });
+
       console.log("login successfull", loginDetail);
 
-      navigation("/Home");
+      //navigation("/Home");
 
       if (res.data.token) {
         localStorage.setItem("token", res.data.token);
       }
       //navigation("/Home");
     } catch (error) {
-      toast.error("invalid email or password", {
-        position: "top-center",
-      });
+      if (error) {
+        toast.error("invalid email or password", {
+          position: "top-center",
+        });
+      }
+
       //const msg = error.res?.data?.message || "invalid email or password";
       //setErroMsg(msg);
     }
@@ -63,7 +70,7 @@ function Login() {
   return (
     <>
       <main className="w-full h-screen bg-cyan-50 flex items-center justify-center ">
-        <ToastContainer />
+        <ToastContainer autoClose={2000} />
         <div className="  rounded-2xl  bg-cyan-50 shadow-xl px-6  py-12 ">
           <form onSubmit={handleSubmit(login)}>
             <div className="flex flex-col gap-3 text-gray-600">

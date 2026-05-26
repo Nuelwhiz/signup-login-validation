@@ -2,12 +2,11 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { FaLock, FaUser } from "react-icons/fa";
-import { MdEmail } from "react-icons/md";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { LockIcon, MailIcon } from "lucide-react";
+import { ToastContainer, toast } from "react-toastify";
 
 interface forgotMail {
   email: string;
@@ -56,11 +55,14 @@ function ForgotPassword() {
         resetDetail,
       );
       console.log(res.data);
-      setSuccessMsg("verification code has been sent to your email");
+      toast.success("verification code has been sent to your email", {
+        position: "top-center",
+      });
       setTimer(60);
       setResendMsg(false);
       // navigate("/ResetPassword");
     } catch (error: any) {
+      toast.error("something went wrong!", { position: "top-center" });
       console.log(error.response.data);
     }
   };
@@ -68,6 +70,7 @@ function ForgotPassword() {
   return (
     <>
       <main className="w-full h-screen bg-cyan-50 flex items-center justify-center ">
+        <ToastContainer />
         <div className="  rounded-2xl  bg-cyan-50 shadow-xl px-6  py-12 ">
           <form onSubmit={handleSubmit(forgotPassCode)}>
             <div className="flex flex-col gap-3 text-gray-600 items-center">
