@@ -13,9 +13,10 @@ interface forgotMail {
 }
 
 function ForgotPassword() {
-  const [successMsg, setSuccessMsg] = useState<string>("");
+  // const [successMsg, setSuccessMsg] = useState<string>("");
   const [timer, setTimer] = useState<number>(60);
   const [resendMsg, setResendMsg] = useState<boolean>(false);
+  const [resentMsg, setResentMsg] = useState<boolean>(false);
 
   const schema = yup.object().shape({
     email: yup.string().email("Not an email").required("Email is required"),
@@ -29,21 +30,19 @@ function ForgotPassword() {
   });
 
   useEffect(() => {
-    let interval: number;
-    if (successMsg && timer > 0) {
-      interval = setInterval(() => {
-        setTimer((prev) => prev - 1);
-      }, 1000);
-    }
+    if (!resentMsg) return;
     if (timer === 0) {
       setResendMsg(true);
+      return;
     }
+    const interval = setInterval(() => {
+      setTimer((prev) => prev - 1);
+    }, 1000);
     return () => clearInterval(interval);
-  }, [timer, successMsg]);
-  //
+  }, [timer, resentMsg]);
 
   //const [codeDisplay, setCodeDisplay] = useState<boolean>(false);
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
 
   const forgotPassCode = async (data: forgotMail) => {
     const resetDetail = {
@@ -54,10 +53,12 @@ function ForgotPassword() {
         "https://api-coders.ipglobalreits.com/api/auth/forgot-password",
         resetDetail,
       );
-      console.log(res.data);
       toast.success("verification code has been sent to your email", {
         position: "top-center",
       });
+      console.log(res.data);
+
+      setResentMsg(true);
       setTimer(60);
       setResendMsg(false);
       // navigate("/ResetPassword");
@@ -103,16 +104,16 @@ function ForgotPassword() {
               </div>
 
               <button
-                disabled={!resendMsg && successMsg !== ""}
-                className={` hover:bg-green-700 w-full py-1 rounded cursor-pointer my-3 text-white ${!resendMsg && successMsg !== "" ? "bg-gray-400" : "bg-green-900"}`}
+                disabled={!resendMsg && resentMsg}
+                className={` w-full py-1 rounded  
+                  my-3 text-white ${!resendMsg && !resentMsg ? "bg-green-900  hover:bg-green-700 cursor-pointer" : "bg-gray-400 cursor-not-allowed"}`}
               >
-                {successMsg
+                {resentMsg
                   ? resendMsg
                     ? "Resend code"
                     : `Resend in ${timer}s`
                   : "Send code"}
               </button>
-              {successMsg && <p className="text-green-600"> {successMsg}</p>}
 
               <div className="flex items-center justify-between ">
                 <div className="flex-1 w-50 border border-gray-200 rounded "></div>

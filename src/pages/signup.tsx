@@ -79,8 +79,13 @@ function Signup() {
       toast.success("signup successfully", {
         position: "top-center",
       });
+
+      setTimeout(() => {
+        navigate("/Login");
+      }, 3000);
+
       console.log(res.data);
-      navigate("/Login");
+      //navigate("/Login");
     } catch (error) {
       toast.error("email already exist", {
         position: "top-center",
@@ -137,7 +142,7 @@ function Signup() {
                   className="w-full border border-gray-300 rounded-2xl py-0.5 "
                   {...register("country")}
                 >
-                  <option value="" defaultChecked>
+                  <option value="" defaultChecked className="text-gray-100">
                     {" "}
                     Choose country
                   </option>

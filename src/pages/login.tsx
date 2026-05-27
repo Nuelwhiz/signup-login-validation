@@ -44,9 +44,14 @@ function Login() {
         "https://api-coders.ipglobalreits.com/api/auth/sign-in",
         loginDetail,
       );
+
       toast.success("logged in successful", {
         position: "top-center",
       });
+
+      setTimeout(() => {
+        navigation("/Home");
+      }, 3000);
 
       console.log("login successfull", loginDetail);
 

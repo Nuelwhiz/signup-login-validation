@@ -60,7 +60,7 @@ function ResetPassword() {
       );
       toast.success("password reset succesully. redirecting...");
 
-      console.log(resetPassword);
+      console.log(res.data);
 
       setTimeout(() => {
         navigation("/Login");
