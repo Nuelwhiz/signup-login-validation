@@ -1,17 +1,16 @@
 import { useSelector } from "react-redux";
-/* 
-interface user {
-  name: string;
-  age: number;
-  email: string;
-} */
+
 export default function Profile() {
   const user = useSelector((state: any) => state.user.value);
+  const themeChanger = useSelector((state: any) => state.theme.value);
 
   return (
     <>
-      <div className="flex flex-col items-center w-full  ">
-        {" "}
+      <div
+        style={{ background: themeChanger }}
+        className="flex flex-col items-center w-full text-3xl  "
+      >
+        <h1 className="text-5xl">this is my profile</h1>{" "}
         <h1>name: {user.name} </h1>
         <h1>age: {user.age}</h1>
         <h1>email: {user.email}</h1>
