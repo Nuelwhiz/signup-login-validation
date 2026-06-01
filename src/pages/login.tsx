@@ -5,8 +5,11 @@ import * as yup from "yup";
 import axios, { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { Eye, EyeOff, LockIcon, MailIcon } from "lucide-react";
+import { Eye, EyeOff, Import, LockIcon, MailIcon } from "lucide-react";
 import { ToastContainer, toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { loginUser } from "../features/authSlice";
+import { useAppDispatch } from "../features/hooks";
 
 interface Signing {
   email: string;
@@ -32,8 +35,8 @@ function Login() {
   } = useForm<Signing>({
     resolver: yupResolver(logischema),
   });
-  const navigation = useNavigate();
 
+  /* 
   const login = async (data: Signing) => {
     const loginDetail = {
       email: data.email,
@@ -52,15 +55,11 @@ function Login() {
       setTimeout(() => {
         navigation("/Home");
       }, 3000);
-
-      console.log("login successfull", loginDetail);
-
-      //navigation("/Home");
+      console.log(res.data);
 
       if (res.data.token) {
         localStorage.setItem("token", res.data.token);
       }
-      //navigation("/Home");
     } catch (error) {
       if (error) {
         toast.error("invalid email or password", {
@@ -68,8 +67,22 @@ function Login() {
         });
       }
 
-      //const msg = error.res?.data?.message || "invalid email or password";
-      //setErroMsg(msg);
+      
+    }
+  }; */
+
+  const dispatch = useAppDispatch();
+  const navigation = useNavigate();
+
+  const handleLogin = async (data: Signing) => {
+    const result = await dispatch(loginUser(data));
+
+    if (loginUser.fulfilled.match(result)) {
+      toast.success("Login successful");
+
+      navigation("/Home");
+    } else {
+      toast.error("Invalid email or password");
     }
   };
   return (
@@ -77,7 +90,7 @@ function Login() {
       <main className="w-full h-screen bg-cyan-50 flex items-center justify-center ">
         <ToastContainer autoClose={2000} />
         <div className="  rounded-2xl  bg-cyan-50 shadow-xl px-6  py-12 ">
-          <form onSubmit={handleSubmit(login)}>
+          <form onSubmit={handleSubmit(handleLogin)}>
             <div className="flex flex-col gap-3 text-gray-600">
               <div className="flex flex-col gap-1">
                 <h1 className="text-4xl  text-gray-800 ">Log in</h1>

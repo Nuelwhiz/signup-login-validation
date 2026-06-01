@@ -7,7 +7,7 @@ export default function Profile() {
   return (
     <>
       <div
-        style={{ background: themeChanger }}
+        style={{ color: themeChanger }}
         className="flex flex-col items-center w-full text-3xl  "
       >
         <h1 className="text-5xl">this is my profile</h1>{" "}
