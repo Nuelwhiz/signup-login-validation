@@ -14,7 +14,7 @@ import {
   UserIcon,
 } from "lucide-react";
 import { useState } from "react";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 interface registered {
   fullname: string;
@@ -76,9 +76,7 @@ function Signup() {
         "https://api-coders.ipglobalreits.com/api/auth/sign-up",
         signupData,
       );
-      toast.success("signup successfully", {
-        position: "top-center",
-      });
+      toast.success("signup successfully");
 
       setTimeout(() => {
         navigate("/Login");
@@ -87,16 +85,13 @@ function Signup() {
       console.log(res.data);
       //navigate("/Login");
     } catch (error) {
-      toast.error("email already exist", {
-        position: "top-center",
-      });
+      toast.error("user already exist");
     }
   };
 
   return (
     <>
       <main className="w-full h-screen bg-cyan-50 flex items-center justify-center ">
-        <ToastContainer />
         <div className="  rounded-2xl  bg-cyan-50 shadow-xl px-6  py-12 ">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-3 text-gray-600">

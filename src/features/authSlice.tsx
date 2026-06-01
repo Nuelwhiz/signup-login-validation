@@ -1,13 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-//
-// ✅ LOGIN RESPONSE TYPE (keep here for now to reduce confusion)
-//
+// LOGIN RESPONSE TYPE
 type LoginResponse = {
   user: {
     id: string;
     email: string;
+    phone: string;
+    country: string;
     name?: string;
   };
   auth?: {
@@ -15,17 +15,26 @@ type LoginResponse = {
   };
 };
 
-//
-// ✅ LOGIN REQUEST TYPE
-//
+// LOGIN REQUEST TYPE
 type LoginRequest = {
   email: string;
   password: string;
 };
 
-//
-// ✅ ASYNC LOGIN
-//
+// 👇 READ SAVED DATA FROM LOCALSTORAGE
+const savedUser = localStorage.getItem("user");
+const savedAuth = localStorage.getItem("auth");
+
+// 👇 INITIAL STATE
+const initialState = {
+  user: savedUser ? (JSON.parse(savedUser) as LoginResponse["user"]) : null,
+
+  auth: savedAuth ? (JSON.parse(savedAuth) as LoginResponse["auth"]) : null,
+
+  loading: false,
+  error: null as string | null,
+};
+
 export const loginUser = createAsyncThunk<LoginResponse, LoginRequest>(
   "auth/loginUser",
   async (data, { rejectWithValue }) => {
@@ -47,18 +56,11 @@ export const loginUser = createAsyncThunk<LoginResponse, LoginRequest>(
   },
 );
 
-//
-// ✅ SLICE
-//
 const authSlice = createSlice({
   name: "auth",
-  initialState: {
-    user: null as LoginResponse["user"] | null,
-    auth: null as LoginResponse["auth"] | null,
-    loading: false,
-    error: null as string | null,
-  },
 
+  // 👇 USE THE NEW INITIAL STATE
+  initialState,
   reducers: {
     logout: (state) => {
       state.user = null;
@@ -67,17 +69,18 @@ const authSlice = createSlice({
       localStorage.removeItem("auth");
     },
   },
-
   extraReducers: (builder) => {
     builder
       .addCase(loginUser.pending, (state) => {
         state.loading = true;
       })
+
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
         state.user = action.payload.user;
         state.auth = action.payload.auth;
       })
+
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
@@ -86,4 +89,5 @@ const authSlice = createSlice({
 });
 
 export const { logout } = authSlice.actions;
+
 export default authSlice.reducer;

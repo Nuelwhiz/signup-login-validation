@@ -6,15 +6,25 @@ import Signup from "./pages/signup";
 import Home from "./pages/home";
 import ForgotPassword from "./pages/forgotPassword";
 import ResetPassword from "./pages/resePassword";
-
+import ProtectedRoute from "./protector/protectRoute";
+import PublicRoute from "./protector/publicRoute";
+import { ToastContainer } from "react-toastify";
 function App() {
   return (
     <>
       <div>
+        <ToastContainer position="top-center" autoClose={2000} />
         <Router>
           <Routes>
             <Route path="/" element={<Landing />} />
-            <Route path="/Login" element={<Login />} />
+            <Route
+              path="/Login"
+              element={
+                <PublicRoute>
+                  <Login />
+                </PublicRoute>
+              }
+            />
             <Route path="/Signup" element={<Signup />} />
             <Route path="/ForgotPassword" element={<ForgotPassword />} />
 
@@ -22,7 +32,15 @@ function App() {
               path="/auth/reset-password/:token"
               element={<ResetPassword />}
             />
-            <Route path="/Home" element={<Home />} />
+
+            <Route
+              path="/Home"
+              element={
+                <ProtectedRoute>
+                  <Home />
+                </ProtectedRoute>
+              }
+            />
           </Routes>
         </Router>
       </div>

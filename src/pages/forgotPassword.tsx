@@ -6,7 +6,7 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { LockIcon, MailIcon } from "lucide-react";
-import { ToastContainer, toast } from "react-toastify";
+import {  toast } from "react-toastify";
 
 interface forgotMail {
   email: string;
@@ -71,7 +71,7 @@ function ForgotPassword() {
   return (
     <>
       <main className="w-full h-screen bg-cyan-50 flex items-center justify-center ">
-        <ToastContainer />
+        
         <div className="  rounded-2xl  bg-cyan-50 shadow-xl px-6  py-12 ">
           <form onSubmit={handleSubmit(forgotPassCode)}>
             <div className="flex flex-col gap-3 text-gray-600 items-center">
