@@ -1,0 +1,16 @@
+import { useSelector } from "react-redux";
+import { Navigate } from "react-router-dom";
+import type { ReactNode } from "react";
+
+const PublicRoute = ({ children }: { children: ReactNode }) => {
+  const user = useSelector((state: any) => state.auth.user);
+
+  // If user is already logged in → block login/signup pages
+  if (user) {
+    return <Navigate to="/Home" replace />;
+  }
+
+  return children;
+};
+
+export default PublicRoute;
