@@ -1,14 +1,15 @@
 import { useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Landing from "./pages/landing";
 import Login from "./pages/login";
 import Signup from "./pages/signup";
 import Home from "./pages/home";
 import ForgotPassword from "./pages/forgotPassword";
 import ResetPassword from "./pages/resePassword";
-//import ProtectedRoute from "./protector/protectRoute";
+import ProtectedRoute from "./protector/protectRoute";
 import PublicRoute from "./protector/publicRoute";
 import { ToastContainer } from "react-toastify";
+import NotLoggedIn from "./pages/notLoggedIn";
 function App() {
   return (
     <>
@@ -27,18 +28,18 @@ function App() {
             />
             <Route path="/Signup" element={<Signup />} />
             <Route path="/ForgotPassword" element={<ForgotPassword />} />
+            <Route path="/NotLoggedIn" element={<NotLoggedIn />} />
 
             <Route
               path="/auth/reset-password/:token"
               element={<ResetPassword />}
             />
-
             <Route
               path="/Home"
               element={
-                <>
+                <ProtectedRoute>
                   <Home />
-                </>
+                </ProtectedRoute>
               }
             />
           </Routes>

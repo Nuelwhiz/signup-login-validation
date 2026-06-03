@@ -79,14 +79,14 @@ function Login() {
 
     if (loginUser.fulfilled.match(result)) {
       toast.success("Login successful");
-        navigation("/Home");
-      
+      navigation("/Home");
     } else {
       toast.error("Invalid email or password");
     }
   };
   return (
     <>
+    
       <main className="w-full h-screen bg-cyan-50 flex items-center justify-center ">
         <div className="  rounded-2xl  bg-cyan-50 shadow-xl px-6  py-12 ">
           <form onSubmit={handleSubmit(handleLogin)}>

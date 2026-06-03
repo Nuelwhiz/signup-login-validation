@@ -1,27 +1,31 @@
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../features/authSlice";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Home() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   // 👇 get user from Redux
-  const user = useSelector((state: any) => state.auth.user);
+  const user = useSelector((state) => state.auth.user);
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate("/login");
+    navigate("/Login");
   };
 
   return (
     <div className="p-5">
+     {/*  <Link to="/" className="bg-green-900 px-4 py-2 rounded-2xl text-white">
+        back to landing page
+      </Link> */}
       <h1 className="text-2xl font-bold">Home Page......</h1>
 
-      {/* ✅ DISPLAY USER DATA */}
+      {/*  DISPLAY USER DATA */}
       {user ? (
         <div className="mt-5">
-          <h2 className="text-green-600 text-xl">Welcome user 👋</h2>
+          <h2 className="text-green-600 text-xl">Welcome user </h2>
 
           <p>
             <strong>Name:</strong> {user?.fullname || "No name"}
