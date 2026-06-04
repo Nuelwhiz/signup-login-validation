@@ -9,7 +9,7 @@ import ResetPassword from "./pages/resePassword";
 import ProtectedRoute from "./protector/protectRoute";
 import PublicRoute from "./protector/publicRoute";
 import { ToastContainer } from "react-toastify";
-import NotLoggedIn from "./pages/notLoggedIn";
+//import NotLoggedIn from "./pages/notLoggedIn";
 function App() {
   return (
     <>
@@ -26,9 +26,16 @@ function App() {
                 </PublicRoute>
               }
             />
-            <Route path="/Signup" element={<Signup />} />
+            <Route
+              path="/Signup"
+              element={
+                <PublicRoute>
+                  <Signup />
+                </PublicRoute>
+              }
+            />
             <Route path="/ForgotPassword" element={<ForgotPassword />} />
-            <Route path="/NotLoggedIn" element={<NotLoggedIn />} />
+            {/* <Route path="/NotLoggedIn" element={<NotLoggedIn />} /> */}
 
             <Route
               path="/auth/reset-password/:token"
