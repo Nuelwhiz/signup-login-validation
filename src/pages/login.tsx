@@ -11,10 +11,7 @@ import { useDispatch } from "react-redux";
 import { loginUser } from "../features/authSlice";
 import { useAppDispatch } from "../features/hooks";
 
-interface Signing {
-  email: string;
-  password: string;
-}
+
 
 function Login() {
   const [showPassword, setShowPassword] = useState<boolean>(false);

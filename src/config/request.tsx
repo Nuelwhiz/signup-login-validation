@@ -27,5 +27,4 @@ const pop = async (url: string, data?: any, config?: AxiosRequestConfig) => {
     })
     .then(extractResponseData, errBody);
 };
-
 export { get, post, patch, pop };

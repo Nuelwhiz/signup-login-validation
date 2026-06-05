@@ -11,7 +11,6 @@ import {  toast } from "react-toastify";
 interface forgotMail {
   email: string;
 }
-
 function ForgotPassword() {
   // const [successMsg, setSuccessMsg] = useState<string>("");
   const [timer, setTimer] = useState<number>(60);
