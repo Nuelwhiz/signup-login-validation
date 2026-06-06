@@ -4,7 +4,7 @@ import { get, post, patch, pop } from "../config/request"
 import type { RootState } from "./store";
 
 
-/* 
+
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -21,7 +21,7 @@ const authSlice = createSlice({
   },
 
   extraReducers: (builder) => {
-    builder */
+    builder
 
       // LOGIN
       /* .addCase(login.pending, (state) => {

@@ -17,7 +17,7 @@ function Home() {
 
   return (
     <div className="p-5">
-     {/*  <Link to="/" className="bg-green-900 px-4 py-2 rounded-2xl text-white">
+      {/*  <Link to="/" className="bg-green-900 px-4 py-2 rounded-2xl text-white">
         back to landing page
       </Link> */}
       <h1 className="text-2xl font-bold">Home Page......</h1>
@@ -46,6 +46,7 @@ function Home() {
           <p>
             <strong>ID:</strong> {user?.id}
           </p>
+          <p>users profile</p>
         </div>
       ) : (
         <p className="text-red-500 mt-5">No user logged in</p>
