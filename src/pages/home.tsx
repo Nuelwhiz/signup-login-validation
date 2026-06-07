@@ -7,9 +7,7 @@ function Home() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // 👇 get user from Redux
-  const user = useSelector((state) => state.auth.user);
-
+  const user = useSelector((state: any) => state.auth.user);
   const handleLogout = () => {
     dispatch(logout());
     navigate("/Login");

@@ -1,22 +1,23 @@
-export const initialLoginVaue = {
-  email: "",
-  password: "",
-};
+export interface initialLoginVaue {
+  email: "";
+  password: "";
+}
 
-export const initialSignupVaue = {
-  fullname: "",
-  email: "",
-  country: "",
-  phone: "",
-  password: "",
-  comfirmPassword: "",
-};
+export interface initialSignupVaue {
+  fullname: "";
+  email: "";
+  country: "";
+  phone: "";
+  password: "";
+  comfirmPassword: "";
+}
+export type initialSignupPayload = Omit<initialSignupVaue, "comfirmPassword">;
 
-export const initialForgotVal = {
-  email: "",
-};
+export interface initialForgotVal {
+  email: "";
+}
 
-export const initialResetVal = {
-  password: "",
-  comfirmPassword: "",
-};
+export interface initialResetVal {
+  password: "";
+  comfirmPassword: "";
+}
