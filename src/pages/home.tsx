@@ -7,7 +7,10 @@ function Home() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const user = useSelector((state: any) => state.auth.user);
+  const selectUser = (state: any) => state.auth.user;
+  const selectAuth = (state: any) => state.auth;
+
+  const user = useSelector(selectUser);
   const handleLogout = () => {
     dispatch(logout());
     navigate("/Login");

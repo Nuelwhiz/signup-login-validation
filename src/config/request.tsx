@@ -1,30 +1,28 @@
 import type { AxiosRequestConfig } from "axios";
-import { buildInstance, extractResponseData, errBody } from "./config";
+import { api } from "./config";
 
-const get = async (url: string, config?: AxiosRequestConfig) => {
-  return await buildInstance()
-    .get(url, config)
-    .then(extractResponseData, errBody);
+// GET
+export const get = async (url: string, config?: AxiosRequestConfig) => {
+  const res = await api.get(url, config);
+  return res.data;
 };
 
-const post = async (url: string, data?: any, config?: AxiosRequestConfig) => {
-  return await buildInstance()
-    .post(url, data, config)
-    .then(extractResponseData, errBody);
+// POST
+export const post = async (
+  url: string,
+  data?: any,
+  config?: AxiosRequestConfig,
+) => {
+  const res = await api.post(url, data, config);
+  return res.data;
 };
 
-const patch = async (url: string, data?: any, config?: AxiosRequestConfig) => {
-  return await buildInstance()
-    .patch(url, data, config)
-    .then(extractResponseData, errBody);
+// PATCH
+export const patch = async (
+  url: string,
+  data?: any,
+  config?: AxiosRequestConfig,
+) => {
+  const res = await api.patch(url, data, config);
+  return res.data;
 };
-
-const pop = async (url: string, data?: any, config?: AxiosRequestConfig) => {
-  return await buildInstance()
-    .delete(url, {
-      ...config,
-      data,
-    })
-    .then(extractResponseData, errBody);
-};
-export { get, post, patch, pop };

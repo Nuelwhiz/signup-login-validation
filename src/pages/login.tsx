@@ -11,11 +11,13 @@ import { useDispatch } from "react-redux";
 import { loginUser } from "../features/authSlice";
 import { useAppDispatch } from "../features/hooks";
 
-
-
 function Login() {
-  const [showPassword, setShowPassword] = useState<boolean>(false);
+  interface Signing {
+    email: string;
+    password: string;
+  }
 
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   // const [erroMsg, setErroMsg] = useState<string>("");
   const logischema = yup.object().shape({
     email: yup.string().email("Not an email").required("Email ir required"),
@@ -33,6 +35,34 @@ function Login() {
     resolver: yupResolver(logischema),
   });
 
+  const dispatch = useAppDispatch();
+  const navigation = useNavigate();
+
+  const handleLogin = async (data: Signing) => {
+    try {
+      const result = await dispatch(loginUser(data)).unwrap();
+
+      console.log("LOGIN SUCCESS ✔");
+
+      localStorage.setItem("token", result?.token || result?.data?.token);
+
+      navigation("/Home"); // 👈 TEST THIS
+      console.log("NAVIGATED ✔");
+    } catch (error) {
+      console.log("LOGIN FAILED ❌", error);
+    }
+  };
+  /* const handleLogin = async (data: Signing) => {
+    const result = await dispatch(loginUser(data));
+
+    if (loginUser.fulfilled.match(result)) {
+      toast.success("Login successful");
+      navigation("/Home");
+    } else {
+      toast.error("Invalid email or password");
+    }
+  };
+ */
   /* 
   const login = async (data: Signing) => {
     const loginDetail = {
@@ -67,23 +97,8 @@ function Login() {
       
     }
   }; */
-
-  const dispatch = useAppDispatch();
-  const navigation = useNavigate();
-
-  const handleLogin = async (data: Signing) => {
-    const result = await dispatch(loginUser(data));
-
-    if (loginUser.fulfilled.match(result)) {
-      toast.success("Login successful");
-      navigation("/Home");
-    } else {
-      toast.error("Invalid email or password");
-    }
-  };
   return (
     <>
-    
       <main className="w-full h-screen bg-cyan-50 flex items-center justify-center ">
         <div className="  rounded-2xl  bg-cyan-50 shadow-xl px-6  py-12 ">
           <form onSubmit={handleSubmit(handleLogin)}>
