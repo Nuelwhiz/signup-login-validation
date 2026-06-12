@@ -3,7 +3,7 @@ import { logout } from "../features/authSlice";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-function Home() {
+function User() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -64,4 +64,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default User;

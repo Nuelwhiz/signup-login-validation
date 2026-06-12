@@ -46,7 +46,7 @@ function Login() {
 
       localStorage.setItem("token", result?.token || result?.data?.token);
 
-      navigation("/Home"); // 👈 TEST THIS
+      navigation("/LayoutDashBord"); // 👈 TEST THIS
       console.log("NAVIGATED ✔");
     } catch (error) {
       console.log("LOGIN FAILED ❌", error);

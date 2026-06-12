@@ -6,7 +6,9 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { LockIcon, MailIcon } from "lucide-react";
-import {  toast } from "react-toastify";
+import { useAppDispatch } from "../features/hooks";
+import { forgotPassword } from "../features/authSlice";
+import { toast } from "react-toastify";
 
 interface forgotMail {
   email: string;
@@ -41,26 +43,22 @@ function ForgotPassword() {
   }, [timer, resentMsg]);
 
   //const [codeDisplay, setCodeDisplay] = useState<boolean>(false);
-  //const navigate = useNavigate();
-
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const forgotPassCode = async (data: forgotMail) => {
     const resetDetail = {
       email: data.email,
     };
     try {
-      const res = await axios.post(
-        "https://api-coders.ipglobalreits.com/api/auth/forgot-password",
-        resetDetail,
-      );
+      await dispatch(forgotPassword({ email: data.email }));
       toast.success("verification code has been sent to your email", {
         position: "top-center",
       });
-      console.log(res.data);
-
+      //console.log(res.data);
       setResentMsg(true);
       setTimer(60);
       setResendMsg(false);
-      // navigate("/ResetPassword");
+      //navigate("/ResetPassword");
     } catch (error: any) {
       toast.error("something went wrong!", { position: "top-center" });
       console.log(error.response.data);
@@ -70,7 +68,6 @@ function ForgotPassword() {
   return (
     <>
       <main className="w-full h-screen bg-cyan-50 flex items-center justify-center ">
-        
         <div className="  rounded-2xl  bg-cyan-50 shadow-xl px-6  py-12 ">
           <form onSubmit={handleSubmit(forgotPassCode)}>
             <div className="flex flex-col gap-3 text-gray-600 items-center">

@@ -4,6 +4,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../features/hooks";
+import { registerUser } from "../features/authSlice";
 import Country from "../country/countries.json";
 import {
   Eye,
@@ -62,6 +64,7 @@ function Signup() {
     </option>
   ));
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   const onSubmit = async (data: registered) => {
     const signupData = {
@@ -72,20 +75,14 @@ function Signup() {
       password: data.password,
     };
     try {
-      const res = await axios.post(
-        "https://api-coders.ipglobalreits.com/api/auth/sign-up",
-        signupData,
-      );
+      await dispatch(registerUser(signupData)).unwrap();
       toast.success("signup successfully");
-
       setTimeout(() => {
         navigate("/Login");
       }, 3000);
-
-      console.log(res.data);
       //navigate("/Login");
     } catch (error) {
-      toast.error("user already exist");
+      toast.error("reistration failed");
     }
   };
 
