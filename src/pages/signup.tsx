@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../features/hooks";
 import { registerUser } from "../features/authSlice";
@@ -65,7 +64,6 @@ function Signup() {
   ));
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-
   const onSubmit = async (data: registered) => {
     const signupData = {
       fullname: data.fullname,

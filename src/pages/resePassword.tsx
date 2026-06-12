@@ -2,11 +2,12 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import axios from "axios";
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { LockIcon, KeyIcon, Eye, EyeOff } from "lucide-react";
 import { toast } from "react-toastify";
+import { resetPassword } from "../features/authSlice";
+import { useAppDispatch } from "../features/hooks";
 //import { ToastContainer, toast } from "react-toastify";
 
 interface resetPassword {
@@ -37,7 +38,6 @@ function ResetPassword() {
   const { token } = useParams();
   const [msg, setMsg] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-
   const {
     register,
     handleSubmit,
@@ -46,35 +46,32 @@ function ResetPassword() {
     resolver: yupResolver(logischema),
   });
 
+ const dispatch = useAppDispatch()
+//reset password
   const reset = async (data: resetPassword) => {
-    setLoading(true);
-    setMsg("");
-    const resetPassword = {
-      password: data.password,
-      token,
-    };
-    try {
-      const res = await axios.patch(
-        "https://api-coders.ipglobalreits.com/api/auth/reset-password",
-        resetPassword,
-      );
-      toast.success("password reset succesully. redirecting...");
-
-      console.log(res.data);
-
-      setTimeout(() => {
-        navigation("/Login");
-      }, 2000);
-
-      //navigation("/Home");
-    } catch (error: any) {
-      toast.error("something went wrong");
-
-      //toast.success("something went wrong!");
-    } finally {
-      setLoading(false);
-    }
-  };
+  if (!token) {
+    toast.error("Invalid reset token");
+    return;
+  }
+  setLoading(true);
+  setMsg("");
+  try {
+    await dispatch(
+      resetPassword({
+        password: data.password,
+        token,
+      })
+    ).unwrap();
+    toast.success("Password reset successfully. Redirecting...");
+    setTimeout(() => {
+      navigation("/Login");
+    }, 2000);
+  } catch (error: any) {
+    toast.error(error || "Something went wrong");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <>

@@ -9,7 +9,7 @@ import ResetPassword from "./pages/resePassword";
 import ProtectedRoute from "./protector/protectRoute";
 import PublicRoute from "./protector/publicRoute";
 import { ToastContainer } from "react-toastify";
-import User from "./pages/home";
+import User from "./pages/user";
 import LayoutDashBord from "./layout/layout";
 import Notify from "./pages/notification";
 import Coin from "./pages/coin"; //import NotLoggedIn from "./pages/notLoggedIn";

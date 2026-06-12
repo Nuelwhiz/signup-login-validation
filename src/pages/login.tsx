@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import axios, { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Eye, EyeOff, Import, LockIcon, MailIcon } from "lucide-react";
@@ -37,19 +36,15 @@ function Login() {
 
   const dispatch = useAppDispatch();
   const navigation = useNavigate();
-
   const handleLogin = async (data: Signing) => {
     try {
       const result = await dispatch(loginUser(data)).unwrap();
-
       console.log("LOGIN SUCCESS ✔");
-
       localStorage.setItem("token", result?.token || result?.data?.token);
-
-      navigation("/LayoutDashBord"); // 👈 TEST THIS
+      navigation("/LayoutDashBord");
       console.log("NAVIGATED ✔");
     } catch (error) {
-      console.log("LOGIN FAILED ❌", error);
+      console.log("LOGIN FAILED", error);
     }
   };
   /* const handleLogin = async (data: Signing) => {

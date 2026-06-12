@@ -2,7 +2,6 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import axios from "axios";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { LockIcon, MailIcon } from "lucide-react";
@@ -19,6 +18,7 @@ function ForgotPassword() {
   const [resendMsg, setResendMsg] = useState<boolean>(false);
   const [resentMsg, setResentMsg] = useState<boolean>(false);
 
+  //validation
   const schema = yup.object().shape({
     email: yup.string().email("Not an email").required("Email is required"),
   });
