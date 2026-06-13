@@ -8,6 +8,7 @@ import { LockIcon, MailIcon } from "lucide-react";
 import { useAppDispatch } from "../features/hooks";
 import { forgotPassword } from "../features/authSlice";
 import { toast } from "react-toastify";
+import { forgotPasswordSchema } from "../validations/forgotValidation";
 
 interface forgotMail {
   email: string;
@@ -18,18 +19,16 @@ function ForgotPassword() {
   const [resendMsg, setResendMsg] = useState<boolean>(false);
   const [resentMsg, setResentMsg] = useState<boolean>(false);
 
-  //validation
-  const schema = yup.object().shape({
-    email: yup.string().email("Not an email").required("Email is required"),
-  });
+  
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<forgotMail>({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(forgotPasswordSchema),
   });
 
+  //60s count
   useEffect(() => {
     if (!resentMsg) return;
     if (timer === 0) {
@@ -45,6 +44,8 @@ function ForgotPassword() {
   //const [codeDisplay, setCodeDisplay] = useState<boolean>(false);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
+  //request
   const forgotPassCode = async (data: forgotMail) => {
     const resetDetail = {
       email: data.email,

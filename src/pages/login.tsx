@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Eye, EyeOff, Import, LockIcon, MailIcon } from "lucide-react";
@@ -9,6 +8,7 @@ import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../features/authSlice";
 import { useAppDispatch } from "../features/hooks";
+import { logischema } from "../validations/loginValidation";
 
 function Login() {
   interface Signing {
@@ -17,15 +17,6 @@ function Login() {
   }
 
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  // const [erroMsg, setErroMsg] = useState<string>("");
-  const logischema = yup.object().shape({
-    email: yup.string().email("Not an email").required("Email ir required"),
-    password: yup
-      .string()
-      .required("password is required")
-      .min(8, "less than 8 characters")
-      .max(20, "more that 20 character"),
-  });
   const {
     register,
     handleSubmit,

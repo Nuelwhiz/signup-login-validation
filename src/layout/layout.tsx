@@ -5,11 +5,19 @@ import { logout } from "../features/authSlice";
 import { useAppDispatch } from "../features/hooks";
 import { useNavigate } from "react-router-dom";
 import { PanelLeftClose, PanelLeftOpen } from "lucide-react";
+
 export default function LayoutDashBord() {
   const [open, setOpen] = useState(true);
   function tuggle() {
     setOpen((prev) => !prev);
   }
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/Login");
+  };
+  const location = useLocation();
 
   return (
     <>
@@ -48,13 +56,13 @@ export default function LayoutDashBord() {
             <div className={` flex flex-col  ${open ? "pr-15" : "pr-5"}`}>
               <Link
                 to="user"
-                className={`px-4 py-2 rounded-r-2xl ${
+                className={`px-4 py-2 rounded-r-2xl flex items-center  ${
                   location.pathname.includes("/user")
                     ? "bg-gray-500 text-white"
                     : "text-slate-400 hover:bg-gray-600"
                 }`}
               >
-                Users
+                User
               </Link>
 
               <Link
@@ -78,7 +86,10 @@ export default function LayoutDashBord() {
                 Coins
               </Link>
 
-              <button className="mt-5 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition w-fit ml-2 cursor-pointer">
+              <button
+                onClick={handleLogout}
+                className="mt-5 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded transition w-fit ml-2 cursor-pointer"
+              >
                 Logout
               </button>
             </div>

@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../features/hooks";
 import { registerUser } from "../features/authSlice";
@@ -16,6 +15,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { signupSchema } from "../validations/signupValidation";
 
 interface registered {
   fullname: string;
@@ -31,31 +31,12 @@ function Signup() {
   const [comfirmShowPassword, setComfirmShowPassword] =
     useState<boolean>(false);
 
-  const schema = yup.object().shape({
-    fullname: yup.string().required("your full name is required"),
-    email: yup.string().email("Not an email").required("Email ir required"),
-    country: yup.string().required("country is required"),
-    phone: yup
-      .string()
-      .required("phone number is require")
-      .min(11, "invalid number"),
-
-    password: yup
-      .string()
-      .required("password is required")
-      .min(8, "less than 8 characters")
-      .max(20, "more that 20 character"),
-    comfirmPassword: yup
-      .string()
-      .oneOf([yup.ref("password")], "password does not match")
-      .required("comfirm password"),
-  });
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<registered>({
-    resolver: yupResolver(schema),
+    resolver: yupResolver(signupSchema),
   });
   const countries = Object.keys(Country)?.map((country) => (
     <option key={country} value={country}>

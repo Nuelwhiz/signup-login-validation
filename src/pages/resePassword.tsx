@@ -8,6 +8,7 @@ import { LockIcon, KeyIcon, Eye, EyeOff } from "lucide-react";
 import { toast } from "react-toastify";
 import { resetPassword } from "../features/authSlice";
 import { useAppDispatch } from "../features/hooks";
+import { resetPasswordSchema } from "../validations/resetValidation";
 //import { ToastContainer, toast } from "react-toastify";
 
 interface resetPassword {
@@ -20,58 +21,47 @@ function ResetPassword() {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [comfirmShowPassword, setComfirmShowPassword] =
     useState<boolean>(false);
-  const logischema = yup.object().shape({
-    // email: yup.string().required(),
-    password: yup
-      .string()
-      .required("password is required")
-      .min(6, "less than 6 characters")
-      .max(12, "more that 12 character"),
-    comfirmPassword: yup
-      .string()
-      .oneOf([yup.ref("password")], "password does not match")
-      .required("comfirm password"),
-  });
 
   //type FormData = yup.InferType<typeof schema>;
   const navigation = useNavigate();
   const { token } = useParams();
   const [msg, setMsg] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  //
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<resetPassword>({
-    resolver: yupResolver(logischema),
+    resolver: yupResolver(resetPasswordSchema),
   });
 
- const dispatch = useAppDispatch()
-//reset password
+  const dispatch = useAppDispatch();
+  //reset password
   const reset = async (data: resetPassword) => {
-  if (!token) {
-    toast.error("Invalid reset token");
-    return;
-  }
-  setLoading(true);
-  setMsg("");
-  try {
-    await dispatch(
-      resetPassword({
-        password: data.password,
-        token,
-      })
-    ).unwrap();
-    toast.success("Password reset successfully. Redirecting...");
-    setTimeout(() => {
-      navigation("/Login");
-    }, 2000);
-  } catch (error: any) {
-    toast.error(error || "Something went wrong");
-  } finally {
-    setLoading(false);
-  }
-};
+    if (!token) {
+      toast.error("Invalid reset token");
+      return;
+    }
+    setLoading(true);
+    setMsg("");
+    try {
+      await dispatch(
+        resetPassword({
+          password: data.password,
+          token,
+        }),
+      ).unwrap();
+      toast.success("Password reset successfully. Redirecting...");
+      setTimeout(() => {
+        navigation("/Login");
+      }, 2000);
+    } catch (error: any) {
+      toast.error(error || "Something went wrong");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <>
