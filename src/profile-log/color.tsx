@@ -1,4 +1,4 @@
-import { useState, type ChangeEvent } from "react";
+/* import { useState, type ChangeEvent } from "react";
 import { useDispatch } from "react-redux";
 import { themeChanger } from "../features/theme";
 
@@ -30,3 +30,4 @@ export default function Color() {
     </>
   );
 }
+ */

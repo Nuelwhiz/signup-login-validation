@@ -5,8 +5,8 @@ import * as yup from "yup";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { LockIcon, MailIcon } from "lucide-react";
-import { useAppDispatch } from "../features/hooks";
-import { forgotPassword } from "../features/authSlice";
+import { useAppDispatch } from "../hooks/hooks";
+import { forgotPassword } from "../authThunk/authSlice";
 import { toast } from "react-toastify";
 import { forgotPasswordSchema } from "../validations/forgotValidation";
 
@@ -19,7 +19,6 @@ function ForgotPassword() {
   const [resendMsg, setResendMsg] = useState<boolean>(false);
   const [resentMsg, setResentMsg] = useState<boolean>(false);
 
-  
   const {
     register,
     handleSubmit,

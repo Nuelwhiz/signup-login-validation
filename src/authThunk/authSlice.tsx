@@ -60,6 +60,7 @@ export const getUser = createAsyncThunk("auth/getUser", async (_, thunkAPI) => {
     return thunkAPI.rejectWithValue(err?.message);
   }
 });
+
 //forgotpassword
 export const forgotPassword = createAsyncThunk(
   "auth/forgotPassword",

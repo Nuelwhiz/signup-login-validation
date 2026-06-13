@@ -6,28 +6,29 @@ import { useState } from "react";
 import { Eye, EyeOff, Import, LockIcon, MailIcon } from "lucide-react";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { loginUser } from "../features/authSlice";
-import { useAppDispatch } from "../features/hooks";
-import { logischema } from "../validations/loginValidation";
+import { loginUser } from "../authThunk/authSlice";
+import { useAppDispatch } from "../hooks/hooks";
+import { loginSchema } from "../validations/loginValidation";
+
 
 function Login() {
-  interface Signing {
+   interface Signing {
     email: string;
     password: string;
   }
-
+  
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Signing>({
-    resolver: yupResolver(logischema),
+    resolver: yupResolver(loginSchema),
   });
 
   const dispatch = useAppDispatch();
   const navigation = useNavigate();
-  const handleLogin = async (data: Signing) => {
+   const handleLogin = async (data: Signing) => {
     try {
       const result = await dispatch(loginUser(data)).unwrap();
       console.log("LOGIN SUCCESS ✔");
@@ -37,7 +38,7 @@ function Login() {
     } catch (error) {
       console.log("LOGIN FAILED", error);
     }
-  };
+  };  
   /* const handleLogin = async (data: Signing) => {
     const result = await dispatch(loginUser(data));
 

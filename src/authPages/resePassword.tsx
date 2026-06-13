@@ -6,8 +6,8 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { LockIcon, KeyIcon, Eye, EyeOff } from "lucide-react";
 import { toast } from "react-toastify";
-import { resetPassword } from "../features/authSlice";
-import { useAppDispatch } from "../features/hooks";
+import { resetPassword } from "../authThunk/authSlice";
+import { useAppDispatch } from "../hooks/hooks";
 import { resetPasswordSchema } from "../validations/resetValidation";
 //import { ToastContainer, toast } from "react-toastify";
 
@@ -35,8 +35,8 @@ function ResetPassword() {
   } = useForm<resetPassword>({
     resolver: yupResolver(resetPasswordSchema),
   });
-
   const dispatch = useAppDispatch();
+
   //reset password
   const reset = async (data: resetPassword) => {
     if (!token) {

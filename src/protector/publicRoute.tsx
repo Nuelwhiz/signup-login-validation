@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
 import type { ReactNode } from "react";
-import type { RootState } from "../features/store";
+import type { RootState } from "../store/store";
 
 const PublicRoute = ({ children }: { children: ReactNode }) => {
   const user = useSelector((state: RootState) => state.auth.user);

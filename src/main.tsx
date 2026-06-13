@@ -4,7 +4,7 @@ import "./index.css";
 import App from "./App.tsx";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
-import store from "./features/store.tsx";
+import store from "./store/store.tsx";
 //import { userSlice } from "./features/user.tsx";
 //import { themeSlice } from "./features/theme.tsx";
 /* import Profile from "./profile-log/profile.tsx";
@@ -22,4 +22,3 @@ createRoot(document.getElementById("root")!).render(
     </Provider>
   </StrictMode>,
 );
-

@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+/* import { useDispatch } from "react-redux";
 import { login, logOut } from "../features/user";
 
 export default function Logs() {
@@ -28,3 +28,4 @@ export default function Logs() {
     </>
   );
 }
+ */

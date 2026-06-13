@@ -2,8 +2,8 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
-import { useAppDispatch } from "../features/hooks";
-import { registerUser } from "../features/authSlice";
+import { useAppDispatch } from "../hooks/hooks";
+import { registerUser } from "../authThunk/authSlice";
 import Country from "../country/countries.json";
 import {
   Eye,
@@ -45,7 +45,9 @@ function Signup() {
   ));
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const onSubmit = async (data: registered) => {
+
+  //signup submit
+  const signupSubmit = async (data: registered) => {
     const signupData = {
       fullname: data.fullname,
       email: data.email,
@@ -59,7 +61,6 @@ function Signup() {
       setTimeout(() => {
         navigate("/Login");
       }, 3000);
-      //navigate("/Login");
     } catch (error) {
       toast.error("reistration failed");
     }
@@ -69,7 +70,7 @@ function Signup() {
     <>
       <main className="w-full h-screen bg-cyan-50 flex items-center justify-center ">
         <div className="  rounded-2xl  bg-cyan-50 shadow-xl px-6  py-12 ">
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form onSubmit={handleSubmit(signupSubmit)}>
             <div className="flex flex-col gap-3 text-gray-600">
               <div className="flex flex-col gap-1">
                 <h1 className="text-4xl  text-gray-800 ">Signup</h1>

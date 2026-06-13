@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Outlet } from "react-router-dom";
-import { logout } from "../features/authSlice";
-import { useAppDispatch } from "../features/hooks";
+import { logout } from "../authThunk/authSlice";
+import { useAppDispatch } from "../hooks/hooks";
 import { useNavigate } from "react-router-dom";
 import { PanelLeftClose, PanelLeftOpen } from "lucide-react";
 

@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux";
+/* import { useSelector } from "react-redux";
 
 export default function Profile() {
   const user = useSelector((state: any) => state.user.value);
@@ -18,3 +18,4 @@ export default function Profile() {
     </>
   );
 }
+ */
