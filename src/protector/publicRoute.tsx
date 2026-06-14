@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import type { ReactNode } from "react";
 import type { RootState } from "../store/store";
 
@@ -8,7 +8,7 @@ const PublicRoute = ({ children }: { children: ReactNode }) => {
 
   // If user is already logged in → block login/signup pages
   if (user) {
-    return <Navigate to="/LayoutDashBord" replace />;
+    return <Navigate to="/DashBordLayout" replace />;
   }
 
   return children;

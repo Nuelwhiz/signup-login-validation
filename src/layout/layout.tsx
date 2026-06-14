@@ -6,7 +6,7 @@ import { useAppDispatch } from "../hooks/hooks";
 import { useNavigate } from "react-router-dom";
 import { PanelLeftClose, PanelLeftOpen } from "lucide-react";
 
-export default function LayoutDashBord() {
+export default function DashBordLayout() {
   const [open, setOpen] = useState(true);
   function tuggle() {
     setOpen((prev) => !prev);
@@ -43,16 +43,7 @@ export default function LayoutDashBord() {
                 />
               )}
             </button>
-            {/*  <div
-              className={`h-8  bg-slate-500  rounded self-center flex px-2 items-center mt-4 ${open ? "w-45" : "w-15"}`}
-            >
-              <div
-                className={`h-4 w-20 bg-slate-400  rounded ${open ? "block" : "hidden"}  `}
-              ></div>
-            </div>
-            <div
-              className={`h-4 bg-blue-400  rounded ml-5 ${open ? "w-20" : "w-4"}`}
-            ></div> */}
+           
             <div className={` flex flex-col  ${open ? "pr-15" : "pr-5"}`}>
               <Link
                 to="user"

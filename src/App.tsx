@@ -10,7 +10,7 @@ import ProtectedRoute from "./protector/protectRoute";
 import PublicRoute from "./protector/publicRoute";
 import { ToastContainer } from "react-toastify";
 import User from "./pages/user";
-import LayoutDashBord from "./layout/layout";
+import DashBordLayout from "./layout/layout";
 import Notify from "./pages/notification";
 import Coin from "./pages/coin"; //import NotLoggedIn from "./pages/notLoggedIn";
 function App() {
@@ -45,10 +45,10 @@ function App() {
               element={<ResetPassword />}
             />
             <Route
-              path="/LayoutDashBord"
+              path="/DashBordLayout"
               element={
                 <ProtectedRoute>
-                  <LayoutDashBord />
+                  <DashBordLayout />
                 </ProtectedRoute>
               }
             >

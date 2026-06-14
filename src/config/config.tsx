@@ -28,7 +28,6 @@ export const buildInstance = (): AxiosInstance => {
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
-
       return config;
     },
     (error) => Promise.reject(error),
@@ -41,7 +40,6 @@ export const buildInstance = (): AxiosInstance => {
     (response) => extractResponseData(response),
     (error) => errBody(error),
   );
-
   return instance;
 };
 
@@ -51,11 +49,9 @@ export const extractResponseData = ({ data, status }: AxiosResponse): any => {
   if (data?.message === "unauthorized access") {
     console.log("unauthorized access");
   }
-
   if (status >= 400) {
     throw new Error(data?.message || "Request failed");
   }
-
   return data; //  always return clean payload
 };
 
@@ -78,7 +74,7 @@ export const errBody = (err: any) => {
   const errMsg =
     err?.response?.data?.message || err?.message || "Something went wrong";
 
-  throw new Error(errMsg); // ✅ consistent error type
+  throw new Error(errMsg); // consistent error type
 };
 
  // EXPORT READY INSTANCE

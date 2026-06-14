@@ -17,6 +17,7 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { signupSchema } from "../validations/signupValidation";
 
+//SIGNUP TYPE
 interface registered {
   fullname: string;
   email: string;
@@ -27,10 +28,13 @@ interface registered {
 }
 
 function Signup() {
+
+  //SHOW PASSWORD/COMFIRMPASSWORD
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [comfirmShowPassword, setComfirmShowPassword] =
     useState<boolean>(false);
 
+//USEFORM HOOKS
   const {
     register,
     handleSubmit,
@@ -38,6 +42,8 @@ function Signup() {
   } = useForm<registered>({
     resolver: yupResolver(signupSchema),
   });
+
+  //COUNTRY LOGIC
   const countries = Object.keys(Country)?.map((country) => (
     <option key={country} value={country}>
       {country}
@@ -46,7 +52,7 @@ function Signup() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  //signup submit
+  //SIGNUP SUBMIT
   const signupSubmit = async (data: registered) => {
     const signupData = {
       fullname: data.fullname,
@@ -62,7 +68,7 @@ function Signup() {
         navigate("/Login");
       }, 3000);
     } catch (error) {
-      toast.error("reistration failed");
+      toast.error("registration failed");
     }
   };
 

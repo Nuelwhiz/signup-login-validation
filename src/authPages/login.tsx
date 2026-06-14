@@ -10,14 +10,17 @@ import { loginUser } from "../authThunk/authSlice";
 import { useAppDispatch } from "../hooks/hooks";
 import { loginSchema } from "../validations/loginValidation";
 
-
+//LOGIN TYPE
+interface Signing {
+  email: string;
+  password: string;
+}
 function Login() {
-   interface Signing {
-    email: string;
-    password: string;
-  }
-  
+  //SHOW PASSWORD
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  //USEFORM HOOKS
   const {
     register,
     handleSubmit,
@@ -25,65 +28,27 @@ function Login() {
   } = useForm<Signing>({
     resolver: yupResolver(loginSchema),
   });
-
+  //LOGIN SUBMIT
   const dispatch = useAppDispatch();
   const navigation = useNavigate();
-   const handleLogin = async (data: Signing) => {
+
+  const handleLogin = async (data: Signing) => {
+    setIsLoading(true);
+
     try {
       const result = await dispatch(loginUser(data)).unwrap();
-      console.log("LOGIN SUCCESS ✔");
+      console.log("LOGIN SUCCESS ");
       localStorage.setItem("token", result?.token || result?.data?.token);
-      navigation("/LayoutDashBord");
-      console.log("NAVIGATED ✔");
+      toast.success("login successfully");
+      navigation("/DashBordLayout");
     } catch (error) {
+      toast.success("login failed");
       console.log("LOGIN FAILED", error);
-    }
-  };  
-  /* const handleLogin = async (data: Signing) => {
-    const result = await dispatch(loginUser(data));
-
-    if (loginUser.fulfilled.match(result)) {
-      toast.success("Login successful");
-      navigation("/Home");
-    } else {
-      toast.error("Invalid email or password");
+    } finally {
+      setIsLoading(false);
     }
   };
- */
-  /* 
-  const login = async (data: Signing) => {
-    const loginDetail = {
-      email: data.email,
-      password: data.password,
-    };
-    try {
-      const res = await axios.post(
-        "https://api-coders.ipglobalreits.com/api/auth/sign-in",
-        loginDetail,
-      );
 
-      toast.success("logged in successful", {
-        position: "top-center",
-      });
-
-      setTimeout(() => {
-        navigation("/Home");
-      }, 3000);
-      console.log(res.data);
-
-      if (res.data.token) {
-        localStorage.setItem("token", res.data.token);
-      }
-    } catch (error) {
-      if (error) {
-        toast.error("invalid email or password", {
-          position: "top-center",
-        });
-      }
-
-      
-    }
-  }; */
   return (
     <>
       <main className="w-full h-screen bg-cyan-50 flex items-center justify-center ">
@@ -145,8 +110,14 @@ function Login() {
                   ForgotPassword?
                 </Link>
               </div>
-              <button className="bg-green-900  hover:bg-green-700 transition w-full py-1 rounded cursor-pointer my-2 text-white">
+              {/* <button className="bg-green-900  hover:bg-green-700 transition w-full py-1 rounded cursor-pointer my-2 text-white">
                 Login
+              </button> */}
+              <button
+                disabled={isLoading}
+                className="bg-green-900 hover:bg-green-700 transition w-full py-1 rounded cursor-pointer my-2 text-white disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isLoading ? "Logging in..." : "Login"}
               </button>
 
               <div className="flex items-center justify-between ">
