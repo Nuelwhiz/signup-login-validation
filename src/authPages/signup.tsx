@@ -28,13 +28,13 @@ interface registered {
 }
 
 function Signup() {
-
   //SHOW PASSWORD/COMFIRMPASSWORD
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [comfirmShowPassword, setComfirmShowPassword] =
     useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-//USEFORM HOOKS
+  //USEFORM HOOKS
   const {
     register,
     handleSubmit,
@@ -45,7 +45,7 @@ function Signup() {
 
   //COUNTRY LOGIC
   const countries = Object.keys(Country)?.map((country) => (
-    <option key={country} value={country}>
+    <option className="bg-cyan-50 " key={country} value={country}>
       {country}
     </option>
   ));
@@ -54,6 +54,7 @@ function Signup() {
 
   //SIGNUP SUBMIT
   const signupSubmit = async (data: registered) => {
+    setIsLoading(true);
     const signupData = {
       fullname: data.fullname,
       email: data.email,
@@ -68,7 +69,7 @@ function Signup() {
         navigate("/Login");
       }, 3000);
     } catch (error) {
-      toast.error("registration failed");
+      toast.error(error as string);
     }
   };
 
@@ -85,7 +86,7 @@ function Signup() {
 
               <div className="flex flex-col relative">
                 {/*   <label htmlFor="name">Name</label> */}
-                <UserIcon size={17} className="absolute left-1 top-1.5 " />
+                <UserIcon size={17} className="absolute left-2 top-1.5 " />
 
                 <input
                   type="text"
@@ -93,7 +94,7 @@ function Signup() {
                   id="name"
                   placeholder="Full Name"
                   autoComplete="name"
-                  className=" pl-6 py-0.5 w-70 border border-gray-300 rounded-2xl"
+                  className=" pl-7 py-0.5 w-70 border border-gray-300 rounded-2xl"
                 />
                 <p className="text-red-600 text-xs">
                   {errors.fullname?.message}
@@ -101,7 +102,7 @@ function Signup() {
               </div>
               <div className="flex flex-col relative">
                 {/* <label htmlFor="email">Email address</label> */}
-                <MailIcon size={17} className="absolute left-1 top-1.5 " />
+                <MailIcon size={17} className="absolute left-2 top-1.5 " />
 
                 <input
                   type="email"
@@ -109,7 +110,7 @@ function Signup() {
                   {...register("email")}
                   placeholder="Enter email"
                   autoComplete="email"
-                  className=" pl-6 py-0.5 w-70 border border-gray-300 rounded-2xl"
+                  className=" pl-7 py-0.5 w-70 border border-gray-300 rounded-2xl"
                 />
                 <p className="text-red-600 text-xs">{errors.email?.message}</p>
               </div>
@@ -120,7 +121,7 @@ function Signup() {
                   className="w-full border border-gray-300 rounded-2xl py-0.5 "
                   {...register("country")}
                 >
-                  <option value="" defaultChecked className="text-gray-100">
+                  <option value="" defaultChecked className="bg-cyan-50">
                     {" "}
                     Choose country
                   </option>
@@ -132,7 +133,7 @@ function Signup() {
               <div className="flex flex-col relative">
                 {/* <label htmlFor="email">Email address</label> */}
                 {/* <MdEmail className="absolute left-1 top-1.5 " /> */}
-                <PhoneIcon size={17} className="absolute left-1 top-1.5 " />
+                <PhoneIcon size={17} className="absolute left-2 top-1.5 " />
 
                 <input
                   type="tel"
@@ -140,7 +141,7 @@ function Signup() {
                   {...register("phone")}
                   placeholder="Enter phone number"
                   autoComplete="phone"
-                  className=" pl-6 py-0.5 w-70 border border-gray-300 rounded-2xl"
+                  className=" pl-7 py-0.5 w-70 border border-gray-300 rounded-2xl"
                 />
 
                 <p className="text-red-600 text-xs">{errors.phone?.message}</p>
@@ -149,7 +150,7 @@ function Signup() {
               {/* end */}
               <div className="flex flex-col relative">
                 {/* <label htmlFor="password">passsword</label> */}
-                <LockIcon size={17} className="absolute left-1 top-1.5 " />
+                <LockIcon size={17} className="absolute left-2 top-1.5 " />
 
                 <input
                   type={showPassword ? "text" : "password"}
@@ -157,10 +158,10 @@ function Signup() {
                   {...register("password")}
                   placeholder="Enter password"
                   autoComplete="new-password"
-                  className=" w-70 border border-gray-300 rounded-2xl pl-6 py-0.5"
+                  className=" w-70 border border-gray-300 rounded-2xl pl-7 py-0.5"
                 />
                 <span
-                  className="absolute top-1.5 right-1 cursor-pointer"
+                  className="absolute top-1.5 right-2 cursor-pointer"
                   onClick={() => setShowPassword((prev) => !prev)}
                 >
                   {showPassword ? <Eye size={17} /> : <EyeOff size={17} />}
@@ -172,7 +173,7 @@ function Signup() {
               </div>
               <div className="flex flex-col relative">
                 {/*  <label htmlFor="comfirm-password">Comfirm passsword</label> */}
-                <LockIcon size={17} className="absolute left-1 top-1.5 " />
+                <LockIcon size={17} className="absolute left-2 top-1.5 " />
 
                 <input
                   type={comfirmShowPassword ? "text" : "password"}
@@ -180,11 +181,11 @@ function Signup() {
                   {...register("comfirmPassword")}
                   placeholder="comfirm password"
                   autoComplete="new-password"
-                  className=" w-70 border border-gray-300 rounded-2xl pl-6 py-0.5"
+                  className=" w-70 border border-gray-300 rounded-2xl pl-7 py-0.5"
                 />
 
                 <span
-                  className="absolute top-1.5 right-1 cursor-pointer"
+                  className="absolute top-1.5 right-2 cursor-pointer"
                   onClick={() => setComfirmShowPassword((prev) => !prev)}
                 >
                   {comfirmShowPassword ? (
@@ -216,8 +217,11 @@ function Signup() {
                   Terms & privacy policy
                 </Link>
               </div>
-              <button className="bg-green-900 hover:bg-green-700 w-full py-1 rounded cursor-pointer my-1 text-white">
-                Signup
+              <button
+                disabled={isLoading}
+                className=" bg-green-900 hover:bg-green-700 w-full py-1 rounded cursor-pointer my-1 text-white"
+              >
+                {isLoading ? "Creating account..." : "Singup"}
               </button>
 
               <p>{!errors && "registers successfully"}</p>

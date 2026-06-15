@@ -71,7 +71,7 @@ function ForgotPassword() {
         <div className="  rounded-2xl  bg-cyan-50 shadow-xl px-6  py-12 ">
           <form onSubmit={handleSubmit(forgotPassCode)}>
             <div className="flex flex-col gap-3 text-gray-600 items-center">
-              <div className="flex flex-col gap-1 justify-center items-center gap-2">
+              <div className="flex flex-col  justify-center items-center gap-2">
                 <span className="bg-green-100 p-6 rounded-full">
                   <LockIcon size={30} />
                 </span>
@@ -79,14 +79,14 @@ function ForgotPassword() {
                 <h1 className="text-2xl text-center  text-gray-800 ">
                   Forgot password?
                 </h1>
-                <p className=" max-w-[280px] text-center ">
+                <p className=" max-w-70 text-center ">
                   No worries, enter email address and we'll send you a link to
                   reset password
                 </p>
               </div>
               <div className="flex flex-col relative">
                 {/* <label htmlFor="email">Email address</label> */}
-                <MailIcon size={17} className="absolute left-1 top-1.5 " />
+                <MailIcon size={17} className="absolute left-2 top-1.5 " />
 
                 <input
                   type="email"
@@ -94,7 +94,7 @@ function ForgotPassword() {
                   {...register("email")}
                   placeholder="Enter email"
                   autoComplete="email"
-                  className=" pl-6 py-0.5 w-70 border border-gray-300 rounded-2xl"
+                  className=" pl-7 py-0.5 w-70 border border-gray-300 rounded-2xl"
                 />
                 <p className="text-red-600 text-xs">{errors.email?.message}</p>
               </div>

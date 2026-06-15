@@ -68,7 +68,7 @@ function ResetPassword() {
         <div className="  rounded-2xl  bg-cyan-50 shadow-xl px-6  py-12 ">
           <form onSubmit={handleSubmit(reset)}>
             <div className="flex flex-col gap-3 text-gray-600 items-center">
-              <div className="flex flex-col gap-1 justify-center items-center gap-2">
+              <div className="flex flex-col  justify-center items-center gap-2">
                 <span className="bg-green-100 p-6 rounded-full">
                   <KeyIcon size={30} className=" text-3xl " />
                 </span>
@@ -76,7 +76,7 @@ function ResetPassword() {
                 <h1 className="text-2xl text-center  text-gray-800 ">
                   Reset password
                 </h1>
-                <p className=" max-w-[280px] text-center ">
+                <p className=" max-w-70 text-center ">
                   {" "}
                   Reset password to secure your account
                 </p>
@@ -95,7 +95,7 @@ function ResetPassword() {
               {/*  */}
               <div className="flex flex-col relative">
                 {/* <label htmlFor="password">passsword</label> */}
-                <LockIcon size={17} className="absolute left-1 top-1.5 " />
+                <LockIcon size={17} className="absolute left-2 top-1.5 " />
 
                 <input
                   type={showPassword ? "text" : "password"}
@@ -103,13 +103,13 @@ function ResetPassword() {
                   {...register("password")}
                   placeholder="Enter new password"
                   autoComplete="new-password"
-                  className=" w-70 border border-gray-300 rounded-2xl pl-6 py-0.5"
+                  className=" w-70 border border-gray-300 rounded-2xl pl-7 py-0.5"
                 />
                 <p className="text-red-600 text-xs">
                   {errors.password?.message}
                 </p>
                 <span
-                  className="absolute top-1.5 right-1 cursor-pointer"
+                  className="absolute top-1.5 right-2 cursor-pointer"
                   onClick={() => setShowPassword((prev) => !prev)}
                 >
                   {showPassword ? <Eye size={17} /> : <EyeOff size={17} />}
@@ -117,7 +117,7 @@ function ResetPassword() {
               </div>
               <div className="flex flex-col relative">
                 {/*  <label htmlFor="comfirm-password">Comfirm passsword</label> */}
-                <LockIcon size={17} className="absolute left-1 top-1.5 " />
+                <LockIcon size={17} className="absolute left-2 top-1.5 " />
 
                 <input
                   type={comfirmShowPassword ? "text" : "password"}
@@ -125,14 +125,14 @@ function ResetPassword() {
                   {...register("comfirmPassword")}
                   placeholder="comfirm new password"
                   autoComplete="new-password"
-                  className=" w-70 border border-gray-300 rounded-2xl pl-6 py-0.5"
+                  className=" w-70 border border-gray-300 rounded-2xl pl-7 py-0.5"
                 />
 
                 <p className="text-red-600 text-xs">
                   {errors.comfirmPassword?.message}
                 </p>
                 <span
-                  className="absolute top-1.5 right-1 cursor-pointer"
+                  className="absolute top-1.5 right-2 cursor-pointer"
                   onClick={() => setComfirmShowPassword((prev) => !prev)}
                 >
                   {comfirmShowPassword ? (

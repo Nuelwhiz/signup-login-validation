@@ -34,16 +34,15 @@ function Login() {
 
   const handleLogin = async (data: Signing) => {
     setIsLoading(true);
-
     try {
       const result = await dispatch(loginUser(data)).unwrap();
+      toast.success("login successful");
       console.log("LOGIN SUCCESS ");
       localStorage.setItem("token", result?.token || result?.data?.token);
-      toast.success("login successfully");
       navigation("/DashBordLayout");
     } catch (error) {
-      toast.success("login failed");
       console.log("LOGIN FAILED", error);
+      toast.error(error as string);
     } finally {
       setIsLoading(false);
     }
@@ -61,7 +60,7 @@ function Login() {
               </div>
               <div className="flex flex-col relative">
                 {/* <label htmlFor="email">Email address</label> */}
-                <MailIcon size={17} className="absolute left-1 top-1.5 " />
+                <MailIcon size={17} className="absolute left-2 top-1.5 " />
 
                 <input
                   type="email"
@@ -69,13 +68,13 @@ function Login() {
                   {...register("email")}
                   placeholder="Enter email"
                   autoComplete="email"
-                  className=" pl-6 py-0.5 w-70 border border-gray-300 rounded-2xl"
+                  className=" pl-7 py-0.5 w-70 border border-gray-300 rounded-2xl"
                 />
                 <p className="text-red-600 text-xs">{errors.email?.message}</p>
               </div>
               <div className="flex flex-col relative">
                 {/* <label htmlFor="password">passsword</label> */}
-                <LockIcon size={17} className="absolute left-1 top-1.5  " />
+                <LockIcon size={17} className="absolute left-2 top-1.5  " />
 
                 <input
                   type={showPassword ? "text" : "password"}
@@ -83,10 +82,10 @@ function Login() {
                   {...register("password")}
                   placeholder="Enter password"
                   autoComplete="new-password"
-                  className=" w-70 border border-gray-300 rounded-2xl pl-6 py-0.5"
+                  className=" w-70 border border-gray-300 rounded-2xl pl-7 py-0.5"
                 />
                 <span
-                  className="absolute top-1.5 right-1 cursor-pointer"
+                  className="absolute top-1.5 right-2 cursor-pointer"
                   onClick={() => setShowPassword((prev) => !prev)}
                 >
                   {showPassword ? <Eye size={17} /> : <EyeOff size={17} />}
@@ -110,9 +109,7 @@ function Login() {
                   ForgotPassword?
                 </Link>
               </div>
-              {/* <button className="bg-green-900  hover:bg-green-700 transition w-full py-1 rounded cursor-pointer my-2 text-white">
-                Login
-              </button> */}
+
               <button
                 disabled={isLoading}
                 className="bg-green-900 hover:bg-green-700 transition w-full py-1 rounded cursor-pointer my-2 text-white disabled:opacity-50 disabled:cursor-not-allowed"

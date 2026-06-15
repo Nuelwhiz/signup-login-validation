@@ -13,7 +13,7 @@ export default function DashBordLayout() {
   }
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const handleLogout = () => {
+  const handleLogout = async () => {
     dispatch(logout());
     navigate("/Login");
   };
@@ -43,7 +43,7 @@ export default function DashBordLayout() {
                 />
               )}
             </button>
-           
+
             <div className={` flex flex-col  ${open ? "pr-15" : "pr-5"}`}>
               <Link
                 to="user"
