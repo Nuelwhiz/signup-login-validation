@@ -1,11 +1,11 @@
 import { useSelector } from "react-redux";
-import { logout } from "../authThunk/authSlice";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+//import { logout } from "../authThunk/authSlice";
+//import { useNavigate } from "react-router-dom";
+//import { Link } from "react-router-dom";
 
 function User() {
   const selectUser = (state: any) => state.auth.user;
-  const selectAuth = (state: any) => state.auth;
+  //const selectAuth = (state: any) => state.auth;
 
   const user = useSelector(selectUser);
 

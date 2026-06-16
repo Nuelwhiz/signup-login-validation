@@ -3,10 +3,10 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { Eye, EyeOff, Import, LockIcon, MailIcon } from "lucide-react";
+import { Eye, EyeOff, LockIcon, MailIcon } from "lucide-react";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
-import { loginUser } from "../authThunk/authSlice";
+//import { useDispatch } from "react-redux";
+import { loginUser } from "../authThunk/authThunk";
 import { useAppDispatch } from "../hooks/hooks";
 import { loginSchema } from "../validations/loginValidation";
 
@@ -34,20 +34,25 @@ function Login() {
 
   const handleLogin = async (data: Signing) => {
     setIsLoading(true);
+
     try {
       const result = await dispatch(loginUser(data)).unwrap();
-      toast.success("login successful");
-      console.log("LOGIN SUCCESS ");
-      localStorage.setItem("token", result?.token || result?.data?.token);
+
+      console.log("LOGIN SUCCESS:", result);
+
+      toast.success("Login successful");
+      const token = result?.token || result?.data?.token;
+      if (token) {
+        localStorage.setItem("token", token);
+      }
       navigation("/DashBordLayout");
-    } catch (error) {
-      console.log("LOGIN FAILED", error);
-      toast.error(error as string);
+    } catch (error: any) {
+      console.log("LOGIN FAILED:", error);
+      toast.error(error?.message || error || "Login failed");
     } finally {
       setIsLoading(false);
     }
   };
-
   return (
     <>
       <main className="w-full h-screen bg-cyan-50 flex items-center justify-center ">

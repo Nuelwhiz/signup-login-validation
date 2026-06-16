@@ -2,7 +2,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { signupSchema } from "../validations/signupValidation";
 import { useForm } from "react-hook-form";
 import { useAppDispatch } from "../hooks/hooks";
-import { registerUser } from "../authThunk/authSlice";
+import { registerUser } from "../authThunk/authThunk";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 

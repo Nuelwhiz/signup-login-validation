@@ -1,12 +1,11 @@
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 import { LockIcon, MailIcon } from "lucide-react";
 import { useAppDispatch } from "../hooks/hooks";
-import { forgotPassword } from "../authThunk/authSlice";
+import { forgotPassword } from "../authThunk/authThunk";
 import { toast } from "react-toastify";
 import { forgotPasswordSchema } from "../validations/forgotValidation";
 
@@ -41,14 +40,14 @@ function ForgotPassword() {
   }, [timer, resentMsg]);
 
   //const [codeDisplay, setCodeDisplay] = useState<boolean>(false);
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   //request
   const forgotPassCode = async (data: forgotMail) => {
-    const resetDetail = {
+    /* const resetDetail = {
       email: data.email,
-    };
+    }; */
     try {
       await dispatch(forgotPassword({ email: data.email }));
       toast.success("verification code has been sent to your email", {

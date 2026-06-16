@@ -6,7 +6,6 @@ import type { RootState } from "../store/store";
 const PublicRoute = ({ children }: { children: ReactNode }) => {
   const user = useSelector((state: RootState) => state.auth.user);
 
-  // If user is already logged in → block login/signup pages
   if (user) {
     return <Navigate to="/DashBordLayout" replace />;
   }
