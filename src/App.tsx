@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Landing from "./pages/landing";
 import Login from "./authPages/login";
 import Signup from "./authPages/signup";
@@ -23,9 +23,9 @@ function App() {
             <Route
               path="/Login"
               element={
-                <PublicRoute>
-                  <Login />
-                </PublicRoute>
+                /*   <PublicRoute> */
+                <Login />
+                /*   </PublicRoute> */
               }
             />
             <Route
@@ -46,9 +46,9 @@ function App() {
             <Route
               path="/DashBordLayout"
               element={
-                <ProtectedRoute>
-                  <DashBordLayout />
-                </ProtectedRoute>
+                /* <ProtectedRoute> */
+                <DashBordLayout />
+                /*  </ProtectedRoute> */
               }
             >
               <Route path="user" element={<User />} />
