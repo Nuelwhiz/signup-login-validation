@@ -1,12 +1,10 @@
-import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 import type { ReactNode } from "react";
-import type { RootState } from "../store/store";
 
 const PublicRoute = ({ children }: { children: ReactNode }) => {
-  const user = useSelector((state: RootState) => state.auth.user);
+  const token = localStorage.getItem("token");
 
-  if (user) {
+  if (token) {
     return <Navigate to="/DashBordLayout" replace />;
   }
 
