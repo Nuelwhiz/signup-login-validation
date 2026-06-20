@@ -5,7 +5,7 @@ import Signup from "./authPages/signup";
 
 import ForgotPassword from "./authPages/forgotPassword";
 import ResetPassword from "./authPages/resePassword";
-//import ProtectedRoute from "./protector/protectRoute";
+import ProtectedRoute from "./protector/protectRoute";
 import PublicRoute from "./protector/publicRoute";
 import { ToastContainer } from "react-toastify";
 import User from "./pages/user";
@@ -46,11 +46,11 @@ function App() {
             <Route
               path="/DashBordLayout"
               element={
-                <DashBordLayout />
+                /*  <DashBordLayout /> */
 
-                /* <ProtectedRoute>
+                <ProtectedRoute>
                   <DashBordLayout />
-                </ProtectedRoute> */
+                </ProtectedRoute>
               }
             >
               <Route path="user" element={<User />} />
