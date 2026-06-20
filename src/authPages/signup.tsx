@@ -234,7 +234,7 @@ function Signup() {
               <p className="text-center">
                 {" "}
                 Already have an account?
-                <Link className=" text-sm text-green-600" to="/Login">
+                <Link className=" text-sm text-green-600" to="/login">
                   Login
                 </Link>
               </p>

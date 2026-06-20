@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import { loginUser } from "../authThunk/authThunk";
 import { useAppDispatch } from "../hooks/hooks";
 import { loginSchema } from "../validations/loginValidation";
+import { useAuth } from "../context/AuthContext"; // 1. Import your useAuth hook
 
 //LOGIN TYPE
 interface Signing {

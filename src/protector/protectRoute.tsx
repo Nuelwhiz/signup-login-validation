@@ -1,5 +1,19 @@
-// 1. Create a custom hook/context (e.g., useAuth) to manage your actual auth state
 import { Navigate } from "react-router-dom";
+import type { ReactNode } from "react";
+
+const ProtectedRoute = ({ children }: { children: ReactNode }) => {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return children;
+};
+
+export default ProtectedRoute;
+
+/* import { Navigate } from "react-router-dom";
 import type { ReactNode } from "react";
 import { useAuth } from "../context/AuthContext"; // Hypothetical auth provider
 
@@ -18,4 +32,4 @@ const ProtectedRoute = ({ children }: { children: ReactNode }) => {
   return <>{children}</>;
 };
 
-export default ProtectedRoute;
+export default ProtectedRoute; */
