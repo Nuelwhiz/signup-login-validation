@@ -9,7 +9,6 @@ import { toast } from "react-toastify";
 import { loginUser } from "../authThunk/authThunk";
 import { useAppDispatch } from "../hooks/hooks";
 import { loginSchema } from "../validations/loginValidation";
-import { useAuth } from "../context/AuthContext"; // 1. Import your useAuth hook
 
 //LOGIN TYPE
 interface Signing {
@@ -35,7 +34,6 @@ function Login() {
 
   const handleLogin = async (data: Signing) => {
     setIsLoading(true);
-
     try {
       const result = await dispatch(loginUser(data)).unwrap();
 

@@ -7,8 +7,8 @@ import Signup from "./authPages/signup";
 import ForgotPassword from "./authPages/forgotPassword";
 import ResetPassword from "./authPages/resePassword";
 
-import ProtectedRoute from "./protector/protectRoute";
-import PublicRoute from "./protector/publicRoute";
+//import ProtectedRoute from "./protector/protectRoute";
+//import PublicRoute from "./protector/publicRoute";
 
 import DashBordLayout from "./layout/layout";
 import User from "./pages/user";
