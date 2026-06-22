@@ -16,7 +16,6 @@ interface Signing {
   password: string;
 }
 function Login() {
-  //SHOW PASSWORD
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -36,9 +35,7 @@ function Login() {
     setIsLoading(true);
     try {
       const result = await dispatch(loginUser(data)).unwrap();
-
       console.log("LOGIN SUCCESS:", result);
-
       toast.success("Login successful");
       const token = result?.token || result?.data?.token;
       if (token) {
