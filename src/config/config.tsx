@@ -4,7 +4,7 @@ import type { AxiosInstance, AxiosResponse } from "axios";
 export const buildInstance = (): AxiosInstance => {
   const instance = axios.create({
     baseURL: import.meta.env.VITE_API_BASE_URL,
-    timeout: 500000,
+    timeout: 300000,
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
